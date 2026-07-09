@@ -1,0 +1,2 @@
+# Foto
+Untuk menampilkan foto
