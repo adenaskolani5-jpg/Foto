@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Galeri Premium Pro</title>
+    <style>
+        /* ===== RESET & GLOBAL ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0a0a1a;
+            color: #f0f0f0;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.4s, color 0.4s;
+            overflow-x: hidden;
+        }
+        body.light { background: #f5f5f5; color: #1a1a2e; }
+        /* ===== CANVAS BACKGROUND ===== */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+        body.light #bg-canvas { opacity: 0.15; }
+        /* ===== KONTAINER UTAMA ===== */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1500px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 30px 30px 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            transition: background 0.4s, border-color 0.4s;
+        }
+        body.light .container {
+            background: rgba(255,255,255,0.6);
+            border-color: rgba(0,0,0,0.06);
+        }
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .header h1 {
+            font-weight: 300;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header h1 span {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #0a0a1a;
+            padding: 2px 12px;
+            border-radius: 100px;
+        }
+        .header-controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-controls input, .header-controls select, .header-controls button {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: inherit;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+        }
+        .header-controls input:focus, .header-controls select:focus {
+            outline: none;
+            border-color: #fbbf24;
+        }
+        .header-controls button:hover {
+            background: rgba(255,255,255,0.12);
+        }
+        .header-controls .counter {
+            background: transparent;
+            border: none;
+            opacity: 0.7;
+            font-size: 0.85rem;
+            cursor: default;
+        }
+        .toggle-theme {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 100px;
+            padding: 6px 14px;
+            color: inherit;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .toggle-theme:hover { background: rgba(255,255,255,0.12); }
+        /* ===== VIEW TOGGLE ===== */
+        .view-toggle {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 100px;
+            padding: 4px;
+        }
+        .view-toggle button {
+            background: transparent;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 100px;
+            color: inherit;
+            opacity: 0.5;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .view-toggle button.active {
+            opacity: 1;
+            background: rgba(255,255,255,0.1);
+        }
+        /* ===== TAB GROUP (baru) ===== */
+        .tab-group {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 100px;
+            padding: 4px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 100px;
+            color: inherit;
+            opacity: 0.5;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.85rem;
+        }
+        .tab-btn.active {
+            opacity: 1;
+            background: rgba(255,255,255,0.1);
+        }
+        body.light .tab-btn.active {
+            background: rgba(0,0,0,0.08);
+        }
+        /* ===== GALERI ===== */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+        .gallery.list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .gallery-item {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s cubic-bezier(.2,.8,.4,1), box-shadow 0.4s;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeInItem 0.5s forwards;
+        }
+        .gallery-item:nth-child(1) { animation-delay: 0.02s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.05s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.08s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.11s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.14s; }
+        .gallery-item:nth-child(6) { animation-delay: 0.17s; }
+        .gallery-item:nth-child(7) { animation-delay: 0.20s; }
+        .gallery-item:nth-child(8) { animation-delay: 0.23s; }
+        @keyframes fadeInItem {
+            0% { opacity:0; transform: translateY(20px) scale(0.96); }
+            100% { opacity:1; transform: translateY(0) scale(1); }
+        }
+        .gallery-item:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 60px rgba(251,191,36,0.2);
+            z-index: 2;
+        }
+        .gallery-item .img-wrap {
+            position: relative;
+            overflow: hidden;
+            background: #1a1a2e;
+        }
+        .gallery-item .img-wrap img {
+            width: 100%;
+            display: block;
+            transition: transform 0.6s ease, filter 0.4s;
+            -webkit-user-drag: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .gallery-item:hover .img-wrap img {
+            transform: scale(1.05);
+        }
+        /* Skeleton loading */
+        .gallery-item .skeleton {
+            position: absolute;
+            top:0; left:0; width:100%; height:100%;
+            background: linear-gradient(90deg, #2a2a3e 25%, #3a3a4e 50%, #2a2a3e 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        body.light .gallery-item .skeleton {
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+        }
+        /* Overlay info */
+        .gallery-item .overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 30px 16px 16px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: #fff;
+            opacity: 0;
+            transition: opacity 0.3s;
+            backdrop-filter: blur(2px);
+            pointer-events: none;
+        }
+        .gallery-item:hover .overlay { opacity: 1; }
+        .gallery-item .overlay .name {
+            font-weight: 400;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+        }
+        .gallery-item .overlay .meta {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+        /* Tombol aksi di atas overlay */
+        .gallery-item .actions {
+            position: absolute;
+            top: 12px; right: 12px;
+            display: flex;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 3;
+        }
+        .gallery-item:hover .actions { opacity: 1; }
+        .gallery-item .actions button {
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            border: none;
+            color: #fff;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gallery-item .actions button:hover { background: rgba(0,0,0,0.7); transform: scale(1.1); }
+        .gallery-item .actions .fav-btn.active { color: #f43f5e; }
+        /* ===== LIST MODE ===== */
+        .gallery.list .gallery-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 12px;
+            gap: 16px;
+            border-radius: 16px;
+        }
+        .gallery.list .gallery-item .img-wrap {
+            flex: 0 0 120px;
+            height: 80px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .gallery.list .gallery-item .img-wrap img {
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery.list .gallery-item .overlay { display: none; }
+        .gallery.list .gallery-item .actions { position: static; opacity: 1; }
+        /* ===== LIGHTBOX ===== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.88);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox .lb-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .lightbox .lb-image-wrap {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+            min-height: 0;
+        }
+        .lightbox .lb-image-wrap img {
+            max-width: 100%;
+            max-height: 65vh;
+            border-radius: 20px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+            object-fit: contain;
+            user-select: none;
+            -webkit-user-drag: none;
+            transition: transform 0.2s;
+            cursor: zoom-in;
+        }
+        .lightbox .lb-image-wrap img.zoomed {
+            cursor: zoom-out;
+            transform: scale(1.8);
+        }
+        /* Info EXIF */
+        .lb-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 12px 24px;
+            margin-top: 16px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+        }
+        .lb-info .name { font-weight: 400; color: #fff; }
+        .lb-info .meta { opacity: 0.6; }
+        /* Filmstrip */
+        .filmstrip {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+            max-width: 90vw;
+            margin-top: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.2) transparent;
+        }
+        .filmstrip::-webkit-scrollbar { height: 4px; }
+        .filmstrip::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        .filmstrip .thumb {
+            flex: 0 0 70px;
+            height: 50px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.4;
+            transition: 0.25s;
+        }
+        .filmstrip .thumb.active { border-color: #fbbf24; opacity: 1; transform: scale(1.05); }
+        .filmstrip .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; -webkit-user-drag: none; user-select: none; }
+        /* Kontrol lightbox */
+        .lb-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #fff;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+        .lb-nav:hover { background: rgba(255,255,255,0.12); transform: translateY(-50%) scale(1.05); }
+        .lb-nav.prev { left: 4px; }
+        .lb-nav.next { right: 4px; }
+        .lb-close {
+            position: absolute;
+            top: 12px; right: 16px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #fff;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 6;
+        }
+        .lb-close:hover { background: rgba(239,68,68,0.2); transform: rotate(90deg); }
+        .lb-controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 12px;
+        }
+        .lb-controls button {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #ddd;
+            padding: 6px 16px;
+            border-radius: 100px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.3s;
+            backdrop-filter: blur(4px);
+        }
+        .lb-controls button:hover { background: rgba(255,255,255,0.12); }
+        .lb-controls .dots {
+            display: flex;
+            gap: 10px;
+        }
+        .lb-controls .dots span {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .lb-controls .dots span.active {
+            background: #fbbf24;
+            transform: scale(1.3);
+        }
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.4s, transform 0.4s;
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        /* ===== MODAL PASSWORD ===== */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            z-index: 3000;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+        }
+        .password-modal.active { display: flex; }
+        .password-modal .modal-box {
+            background: #1a1a2e;
+            padding: 30px 28px 24px;
+            border-radius: 28px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.06);
+            animation: fadeInItem 0.3s ease;
+        }
+        body.light .password-modal .modal-box {
+            background: #f0f0f0;
+            border-color: rgba(0,0,0,0.06);
+        }
+        .password-modal h2 {
+            font-weight: 400;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .password-modal p {
+            opacity: 0.6;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        .password-modal .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 100px;
+            padding: 0 16px;
+            transition: 0.3s;
+        }
+        .password-modal .input-group:focus-within {
+            border-color: #fbbf24;
+        }
+        .password-modal .input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px 0;
+            color: inherit;
+            font-size: 1rem;
+            outline: none;
+        }
+        .password-modal .input-group .toggle-pw {
+            background: none;
+            border: none;
+            color: #aaa;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0 4px;
+        }
+        .password-modal .error-msg {
+            color: #f87171;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            min-height: 20px;
+        }
+        .password-modal .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+        .password-modal .modal-actions button {
+            padding: 8px 22px;
+            border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: inherit;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .password-modal .modal-actions .btn-confirm {
+            background: #fbbf24;
+            color: #0a0a1a;
+            border: none;
+            font-weight: 500;
+        }
+        .password-modal .modal-actions .btn-confirm:hover {
+            background: #f59e0b;
+        }
+        .password-modal .modal-actions .btn-cancel:hover {
+            background: rgba(255,255,255,0.08);
+        }
+        /* ===== STATISTIK ===== */
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 20px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            padding-top: 16px;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            opacity: 0.4;
+            transition: 0.4s;
+        }
+        body.light .stats { border-color: rgba(0,0,0,0.06); }
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container { padding: 16px; border-radius: 28px; }
+            .header h1 { font-size: 1.5rem; }
+            .gallery { grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 16px; }
+            .filmstrip .thumb { flex: 0 0 50px; height: 40px; }
+            .lb-nav { width: 36px; height: 36px; font-size: 18px; }
+            .lb-nav.prev { left: 0; }
+            .lb-nav.next { right: 0; }
+            .lb-close { top: 8px; right: 8px; width: 36px; height: 36px; font-size: 18px; }
+            .lightbox .lb-image-wrap img { max-height: 50vh; }
+            .lb-info { font-size: 0.75rem; gap: 6px; }
+        }
+        @media (max-width: 480px) {
+            .gallery { grid-template-columns: 1fr; }
+            .header-controls input { width: 100px; }
+        }
+        /* ===== UTILITY ===== */
+        body.no-scroll { overflow: hidden; }
+        .hidden { display: none !important; }
+        .sr-only { position: absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+        img {
+            -webkit-user-drag: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- CANVAS BACKGROUND -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- MODAL PASSWORD -->
+<div class="password-modal" id="passwordModal">
+    <div class="modal-box">
+        <h2>🔒 Verifikasi</h2>
+        <p>Tindakan dibatasi, silahkan masukkan password.</p>
+        <div class="input-group">
+            <input type="password" id="passwordInput" placeholder="Password" autocomplete="off" />
+            <button class="toggle-pw" id="togglePw" aria-label="Tampilkan password"😳</button>
+        </div>
+        <div class="error-msg" id="pwError"></div>
+        <div class="modal-actions">
+            <button class="btn-cancel" id="pwCancel">Batal</button>
+            <button class="btn-confirm" id="pwConfirm">Download</button>
+        </div>
+    </div>
+</div>
+
+<!-- KONTAINER -->
+<div class="container">
+    <header class="header">
+        <h1>
+            ✦ Galeri
+            <span>Aden Askolani Fahri</span>
+        </h1>
+        <div class="header-controls">
+            <input type="text" id="searchInput" placeholder="Cari foto..." aria-label="Cari foto" />
+            <select id="sortSelect" aria-label="Urutkan">
+                <option value="newest">Terbaru</option>
+                <option value="oldest">Terlama</option>
+                <option value="largest">Ukuran terbesar</option>
+                <option value="smallest">Ukuran terkecil</option>
+            </select>
+            <span class="counter" id="counter">0 foto</span>
+            <div class="view-toggle">
+                <button id="gridView" class="active" aria-label="Tampilan grid">▦</button>
+                <button id="listView" aria-label="Tampilan daftar">☰</button>
+            </div>
+            <!-- TAB GROUP -->
+            <div class="tab-group">
+                <button class="tab-btn active" data-tab="all">📸 Semua</button>
+                <button class="tab-btn" data-tab="fav">❤️ Favorit</button>
+            </div>
+            <button class="toggle-theme" id="themeToggle" aria-label="Ganti tema">🌙</button>
+        </div>
+    </header>
+
+    <div class="gallery" id="gallery"></div>
+    <div class="stats" id="stats"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Pratinjau foto">
+    <button class="lb-close" id="lbClose" aria-label="Tutup">✕</button>
+    <button class="lb-nav prev" id="lbPrev" aria-label="Sebelumnya">‹</button>
+    <button class="lb-nav next" id="lbNext" aria-label="Berikutnya">›</button>
+    <div class="lb-container">
+        <div class="lb-image-wrap" id="lbImageWrap">
+            <img id="lbImg" src="" alt="Foto" />
+        </div>
+        <div class="lb-info" id="lbInfo">
+            <span class="name" id="lbName">nama.jpg</span>
+            <span class="meta" id="lbMeta">📅 01/01/2026 · 6000×4000</span>
+        </div>
+        <div class="filmstrip" id="filmstrip"></div>
+        <div class="lb-controls">
+            <button id="lbFav" aria-label="Favorit">❤️</button>
+            <button id="lbDownload" aria-label="Unduh">⬇️</button>
+            <button id="lbSlideshow">▶ Play</button>
+            <select id="lbSpeed" aria-label="Kecepatan slideshow">
+                <option value="2000">2s</option>
+                <option value="3000" selected>3s</option>
+                <option value="4000">4s</option>
+                <option value="5000">5s</option>
+            </select>
+            <div class="dots" id="lbDots"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // KONFIGURASI PASSWORD
+    // ============================================================
+    const DOWNLOAD_PASSWORD = 'admin123'; // Ganti dengan password Anda
+
+    // ============================================================
+    // DATA FOTO
+    // ============================================================
+    const photos = [
+        {
+            src: 'https://raw.githubusercontent.com/adenaskolani5-jpg/Foto/main/IMG_20260701_215637.jpg',
+            name: 'IMG_20260701_215637.jpg',
+            date: '01/07/2026',
+            dimension: '3024×4032',
+            size: '4.2 MB',
+            camera: 'iPhone 13 Pro'
+        },
+        {
+            src: 'https://raw.githubusercontent.com/adenaskolani5-jpg/Foto/main/IMG_20260628_131429.jpg',
+            name: 'IMG_20260628_131429.jpg',
+            date: '28/06/2026',
+            dimension: '4032×3024',
+            size: '3.8 MB',
+            camera: 'iPhone 13 Pro'
+        }
+        // Tambahkan foto lain di sini
+    ];
+
+    // ============================================================
+    // STATE
+    // ============================================================
+    let currentIndex = 0;
+    let isZoomed = false;
+    let slideshowInterval = null;
+    let isSlideshow = false;
+    let currentView = 'grid';
+    let currentTab = 'all'; // 'all' atau 'fav'
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    let filteredPhotos = [...photos];
+    let pendingDownloadSrc = null;
+    let pendingDownloadName = null;
+
+    // ============================================================
+    // DOM REFS
+    // ============================================================
+    const gallery = document.getElementById('gallery');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbName = document.getElementById('lbName');
+    const lbMeta = document.getElementById('lbMeta');
+    const lbDots = document.getElementById('lbDots');
+    const filmstrip = document.getElementById('filmstrip');
+    const counter = document.getElementById('counter');
+    const stats = document.getElementById('stats');
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect = document.getElementById('sortSelect');
+    const gridViewBtn = document.getElementById('gridView');
+    const listViewBtn = document.getElementById('listView');
+    const themeToggle = document.getElementById('themeToggle');
+    const toast = document.getElementById('toast');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+
+    const pwModal = document.getElementById('passwordModal');
+    const pwInput = document.getElementById('passwordInput');
+    const pwError = document.getElementById('pwError');
+    const pwConfirm = document.getElementById('pwConfirm');
+    const pwCancel = document.getElementById('pwCancel');
+    const togglePw = document.getElementById('togglePw');
+
+    // ============================================================
+    // FUNGSI UTILITY
+    // ============================================================
+    function showToast(msg, duration = 2000) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => toast.classList.remove('show'), duration);
+    }
+
+    // ============================================================
+    // BLOKIR KLIK KANAN & DRAG
+    // ============================================================
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            showToast('⛔ Download tidak diizinkan. Gunakan tombol download.', 2000);
+        }
+    });
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+
+    // ============================================================
+    // PASSWORD MODAL
+    // ============================================================
+    function showPasswordModal(src, name) {
+        pendingDownloadSrc = src;
+        pendingDownloadName = name || 'foto.jpg';
+        pwInput.value = '';
+        pwError.textContent = '';
+        pwModal.classList.add('active');
+        pwInput.focus();
+        pwInput.type = 'password';
+        togglePw.textContent = '😳';
+    }
+
+    function hidePasswordModal() {
+        pwModal.classList.remove('active');
+        // Jangan hapus pendingDownloadSrc di sini, biarkan setelah download sukses
+    }
+
+    function confirmPassword() {
+        const input = pwInput.value;
+        if (input === DOWNLOAD_PASSWORD) {
+            // Password benar → langsung download
+            hidePasswordModal();
+            if (pendingDownloadSrc) {
+                performDownload(pendingDownloadSrc, pendingDownloadName);
+                pendingDownloadSrc = null;
+                pendingDownloadName = null;
+            }
+        } else {
+            pwError.textContent = '❌ Password salah. Coba lagi.';
+            pwInput.value = '';
+            pwInput.focus();
+        }
+    }
+
+    togglePw.addEventListener('click', () => {
+        if (pwInput.type === 'password') {
+            pwInput.type = 'text';
+            togglePw.textContent = '🫣';
+        } else {
+            pwInput.type = 'password';
+            togglePw.textContent = '😳';
+        }
+    });
+
+    pwConfirm.addEventListener('click', confirmPassword);
+    pwCancel.addEventListener('click', () => {
+        pendingDownloadSrc = null;
+        pendingDownloadName = null;
+        hidePasswordModal();
+    });
+    pwInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') confirmPassword();
+        if (e.key === 'Escape') {
+            pendingDownloadSrc = null;
+            pendingDownloadName = null;
+            hidePasswordModal();
+        }
+    });
+    pwModal.addEventListener('click', (e) => {
+        if (e.target === pwModal) {
+            pendingDownloadSrc = null;
+            pendingDownloadName = null;
+            hidePasswordModal();
+        }
+    });
+
+    // ============================================================
+    // FUNGSI DOWNLOAD DENGAN 3 METODE
+    // ============================================================
+    function downloadImageWithPassword(src, name) {
+        if (!src) {
+            showToast('❌ URL gambar tidak valid');
+            return;
+        }
+        showPasswordModal(src, name);
+    }
+
+    function performDownload(src, name) {
+        const fileName = name || 'foto.jpg';
+
+        // ----- METODE 1: FETCH -----
+        fetch(src, { mode: 'cors', credentials: 'omit' })
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.blob();
+            })
+            .then(blob => {
+                triggerDownload(blob, fileName);
+                showToast('⬇️ Gambar diunduh');
+            })
+            .catch(err => {
+                console.warn('Fetch gagal, mencoba fallback XHR:', err);
+                // ----- METODE 2: XMLHttpRequest -----
+                fallbackXHR(src, fileName);
+            });
+    }
+
+    function fallbackXHR(src, fileName) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', src, true);
+        xhr.responseType = 'blob';
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                triggerDownload(xhr.response, fileName);
+                showToast('⬇️ Gambar diunduh (XHR)');
+            } else {
+                // ----- METODE 3: CANVAS -----
+                canvasFallback(src, fileName);
+            }
+        };
+        xhr.onerror = function() {
+            canvasFallback(src, fileName);
+        };
+        xhr.send();
+    }
+
+    function canvasFallback(src, fileName) {
+        try {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                canvas.toBlob(function(blob) {
+                    if (blob) {
+                        triggerDownload(blob, fileName);
+                        showToast('⬇️ Gambar diunduh (Canvas)');
+                    } else {
+                        showToast('❌ Gagal mengunduh. Coba buka gambar di tab baru.');
+                    }
+                }, 'image/jpeg', 0.92);
+            };
+            img.onerror = function() {
+                showToast('❌ Gagal memuat gambar. Periksa URL.');
+            };
+            img.src = src;
+        } catch (e) {
+            showToast('❌ Gagal mengunduh. Periksa koneksi dan CORS.');
+            console.error(e);
+        }
+    }
+
+    function triggerDownload(blob, fileName) {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => URL.revokeObjectURL(link.href), 5000);
+    }
+
+    // ============================================================
+    // RENDER GALERI (dengan tab favorit)
+    // ============================================================
+    function renderGallery() {
+        const query = searchInput.value.toLowerCase();
+        const sort = sortSelect.value;
+
+        // 1. Filter pencarian
+        let filtered = photos.filter(p => p.name.toLowerCase().includes(query) || p.date.includes(query));
+
+        // 2. Filter berdasarkan tab
+        if (currentTab === 'fav') {
+            filtered = filtered.filter(p => favorites.includes(p.src));
+        }
+
+        // 3. Sortir
+        switch(sort) {
+            case 'newest': filtered.sort((a,b) => b.date.localeCompare(a.date)); break;
+            case 'oldest': filtered.sort((a,b) => a.date.localeCompare(b.date)); break;
+            case 'largest': filtered.sort((a,b) => parseInt(b.dimension.split('×')[0]) - parseInt(a.dimension.split('×')[0])); break;
+            case 'smallest': filtered.sort((a,b) => parseInt(a.dimension.split('×')[0]) - parseInt(b.dimension.split('×')[0])); break;
+        }
+
+        // Simpan ke variabel global
+        filteredPhotos = filtered;
+
+        gallery.innerHTML = '';
+        if (filteredPhotos.length === 0) {
+            gallery.innerHTML = '<p style="grid-column:1/-1; text-align:center; opacity:0.5; padding:40px 0;">Belum ada foto favorit</p>';
+            counter.textContent = '0 foto';
+            stats.textContent = '';
+            return;
+        }
+
+        filteredPhotos.forEach((photo, idx) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.dataset.src = photo.src;
+
+            const isFav = favorites.includes(photo.src);
+            const dims = photo.dimension.split('×');
+            const ratio = (parseInt(dims[1]) / parseInt(dims[0]) * 100).toFixed(2);
+            const skeleton = `<div class="skeleton" style="padding-top:${ratio}%;"></div>`;
+
+            item.innerHTML = `
+                <div class="img-wrap">
+                    <img src="${photo.src}" alt="${photo.name}" loading="lazy" style="display:block;width:100%;" />
+                    ${skeleton}
+                </div>
+                <div class="overlay">
+                    <div class="name">${photo.name}</div>
+                    <div class="meta">${photo.date} · ${photo.dimension}</div>
+                </div>
+                <div class="actions">
+                    <button class="fav-btn ${isFav?'active':''}" data-src="${photo.src}" aria-label="Favorit">${isFav?'❤️':'🤍'}</button>
+                    <button class="download-btn" data-src="${photo.src}" data-name="${photo.name}" aria-label="Unduh">⬇️</button>
+                </div>
+            `;
+
+            const imgWrap = item.querySelector('.img-wrap');
+            imgWrap.addEventListener('click', (e) => {
+                if (e.target.closest('.actions')) return;
+                const idx2 = filteredPhotos.findIndex(p => p.src === photo.src);
+                if (idx2 !== -1) openLightbox(idx2);
+            });
+
+            item.querySelector('.fav-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFavorite(photo.src, item.querySelector('.fav-btn'));
+            });
+
+            item.querySelector('.download-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                const src = e.currentTarget.dataset.src;
+                const name = e.currentTarget.dataset.name;
+                downloadImageWithPassword(src, name);
+            });
+
+            gallery.appendChild(item);
+        });
+
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.addEventListener('load', () => {
+                const skeleton = img.parentElement.querySelector('.skeleton');
+                if (skeleton) skeleton.remove();
+            });
+            img.addEventListener('error', () => {
+                const skeleton = img.parentElement.querySelector('.skeleton');
+                if (skeleton) skeleton.remove();
+            });
+        });
+
+        counter.textContent = `${filteredPhotos.length} foto`;
+        updateStats();
+        updateView();
+        // Perbarui filmstrip & dots agar sesuai dengan hasil filter
+        buildFilmstripAndDots();
+    }
+
+    // ============================================================
+    // STATISTIK
+    // ============================================================
+    function updateStats() {
+        const total = filteredPhotos.length;
+        if (total === 0) { stats.textContent = ''; return; }
+        let totalSizeMB = 0, totalRes = 0;
+        filteredPhotos.forEach(p => {
+            const size = parseFloat(p.size);
+            if (!isNaN(size)) totalSizeMB += size;
+            const dim = p.dimension.split('×');
+            if (dim.length === 2) totalRes += parseInt(dim[0]) * parseInt(dim[1]);
+        });
+        const avgRes = Math.round(totalRes / total);
+        const totalSizeStr = totalSizeMB.toFixed(1) + ' MB';
+        const avgResStr = avgRes > 1e6 ? (avgRes/1e6).toFixed(1)+'MP' : (avgRes/1e3).toFixed(0)+'k';
+        stats.textContent = `📊 ${total} foto · Total ${totalSizeStr} · Rata-rata ${avgResStr}`;
+    }
+
+    // ============================================================
+    // VIEW TOGGLE
+    // ============================================================
+    function updateView() {
+        gallery.classList.toggle('list', currentView === 'list');
+        gridViewBtn.classList.toggle('active', currentView === 'grid');
+        listViewBtn.classList.toggle('active', currentView === 'list');
+    }
+    gridViewBtn.addEventListener('click', () => { currentView = 'grid'; updateView(); });
+    listViewBtn.addEventListener('click', () => { currentView = 'list'; updateView(); });
+
+    // ============================================================
+    // TAB GROUP (favorit)
+    // ============================================================
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentTab = this.dataset.tab;
+            renderGallery();
+            // filmstrip & dots sudah di-update di dalam renderGallery
+        });
+    });
+
+    // ============================================================
+    // FAVORIT
+    // ============================================================
+    function toggleFavorite(src, btn) {
+        const idx = favorites.indexOf(src);
+        if (idx === -1) {
+            favorites.push(src);
+            btn.textContent = '❤️';
+            btn.classList.add('active');
+            showToast('❤️ Ditambahkan ke favorit');
+        } else {
+            favorites.splice(idx, 1);
+            btn.textContent = '🤍';
+            btn.classList.remove('active');
+            showToast('💔 Dihapus dari favorit');
+        }
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        // Update semua tombol favorit di galeri
+        document.querySelectorAll('.fav-btn').forEach(b => {
+            const s = b.dataset.src;
+            if (s === src) {
+                b.textContent = favorites.includes(src) ? '❤️' : '🤍';
+                b.classList.toggle('active', favorites.includes(src));
+            }
+        });
+        // Update tombol favorit di lightbox
+        const lbFav = document.getElementById('lbFav');
+        if (lbFav.dataset.src === src) {
+            lbFav.textContent = favorites.includes(src) ? '❤️' : '🤍';
+        }
+        // Jika tab favorit aktif, refresh galeri agar foto yang dihapus hilang
+        if (currentTab === 'fav') {
+            renderGallery();
+        }
+    }
+
+    // ============================================================
+    // LIGHTBOX
+    // ============================================================
+    function openLightbox(index) {
+        if (index < 0 || index >= filteredPhotos.length) return;
+        currentIndex = index;
+        const photo = filteredPhotos[currentIndex];
+        lbImg.src = photo.src;
+        lbImg.alt = photo.name;
+        lbImg.classList.remove('zoomed');
+        lbImg.dataset.scale = '1';
+        lbImg.style.transform = 'scale(1)';
+        isZoomed = false;
+        lbName.textContent = photo.name;
+        lbMeta.textContent = `📅 ${photo.date} · ${photo.dimension} · ${photo.size} · 📷 ${photo.camera || 'Unknown'}`;
+        const lbFav = document.getElementById('lbFav');
+        lbFav.dataset.src = photo.src;
+        lbFav.textContent = favorites.includes(photo.src) ? '❤️' : '🤍';
+        updateLightboxUI(currentIndex);
+        lightbox.classList.add('active');
+        document.body.classList.add('no-scroll');
+        if (slideshowInterval) {
+            clearInterval(slideshowInterval);
+            slideshowInterval = null;
+            isSlideshow = false;
+            document.getElementById('lbSlideshow').textContent = '▶ Play';
+        }
+        const activeThumb = filmstrip.querySelector('.thumb.active');
+        if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        const skeleton = lbImg.parentElement.querySelector('.skeleton');
+        if (skeleton) skeleton.remove();
+    }
+
+    function closeLightbox() {
+        if (slideshowInterval) {
+            clearInterval(slideshowInterval);
+            slideshowInterval = null;
+            isSlideshow = false;
+            document.getElementById('lbSlideshow').textContent = '▶ Play';
+        }
+        lightbox.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+    }
+
+    function updateLightboxUI(index) {
+        document.querySelectorAll('#lbDots span').forEach((dot, i) => dot.classList.toggle('active', i === index));
+        document.querySelectorAll('.filmstrip .thumb').forEach((th, i) => th.classList.toggle('active', i === index));
+    }
+
+    function showPrev() {
+        const newIdx = (currentIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
+        openLightbox(newIdx);
+    }
+    function showNext() {
+        const newIdx = (currentIndex + 1) % filteredPhotos.length;
+        openLightbox(newIdx);
+    }
+
+    // ============================================================
+    // SLIDESHOW
+    // ============================================================
+    function toggleSlideshow() {
+        const btn = document.getElementById('lbSlideshow');
+        const speed = parseInt(document.getElementById('lbSpeed').value);
+        if (isSlideshow) {
+            clearInterval(slideshowInterval);
+            slideshowInterval = null;
+            isSlideshow = false;
+            btn.textContent = '▶ Play';
+        } else {
+            isSlideshow = true;
+            btn.textContent = '⏸ Pause';
+            slideshowInterval = setInterval(showNext, speed);
+        }
+    }
+
+    // ============================================================
+    // ZOOM & SWIPE
+    // ============================================================
+    lbImg.addEventListener('click', (e) => {
+        e.stopPropagation();
+        isZoomed = !isZoomed;
+        lbImg.classList.toggle('zoomed', isZoomed);
+        lbImg.dataset.scale = isZoomed ? '1.8' : '1';
+        lbImg.style.transform = `scale(${lbImg.dataset.scale})`;
+    });
+    lbImg.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        let scale = parseFloat(lbImg.dataset.scale) || 1;
+        const delta = e.deltaY > 0 ? -0.1 : 0.1;
+        scale = Math.min(Math.max(scale + delta, 0.6), 3);
+        lbImg.dataset.scale = scale;
+        lbImg.style.transform = `scale(${scale})`;
+        lbImg.classList.toggle('zoomed', scale > 1.2);
+    }, { passive: false });
+
+    let touchStartX = 0, touchStartY = 0;
+    const wrap = document.getElementById('lbImageWrap');
+    wrap.addEventListener('touchstart', (e) => {
+        const t = e.touches[0];
+        touchStartX = t.clientX;
+        touchStartY = t.clientY;
+    }, { passive: true });
+    wrap.addEventListener('touchmove', (e) => {
+        if (!touchStartX) return;
+        const t = e.touches[0];
+        const dx = t.clientX - touchStartX;
+        const dy = t.clientY - touchStartY;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+            e.preventDefault();
+            if (dx > 0) showPrev();
+            else showNext();
+            touchStartX = 0;
+        }
+    }, { passive: false });
+
+    // ============================================================
+    // BUILD FILMSTRIP & DOTS
+    // ============================================================
+    function buildFilmstripAndDots() {
+        filmstrip.innerHTML = '';
+        lbDots.innerHTML = '';
+        filteredPhotos.forEach((photo, i) => {
+            const dot = document.createElement('span');
+            dot.dataset.index = i;
+            dot.addEventListener('click', () => openLightbox(i));
+            lbDots.appendChild(dot);
+            const thumb = document.createElement('div');
+            thumb.className = 'thumb';
+            thumb.innerHTML = `<img src="${photo.src}" alt="${photo.name}" loading="lazy" />`;
+            thumb.addEventListener('click', () => openLightbox(i));
+            filmstrip.appendChild(thumb);
+        });
+    }
+
+    // ============================================================
+    // THEME TOGGLE
+    // ============================================================
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light');
+        themeToggle.textContent = document.body.classList.contains('light') ? '☀️' : '🌙';
+        localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    });
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light');
+        themeToggle.textContent = '☀️';
+    }
+
+    // ============================================================
+    // SEARCH & SORT
+    // ============================================================
+    searchInput.addEventListener('input', renderGallery);
+    sortSelect.addEventListener('change', renderGallery);
+
+    // ============================================================
+    // KEYBOARD SHORTCUTS
+    // ============================================================
+    document.addEventListener('keydown', (e) => {
+        if (pwModal.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                pendingDownloadSrc = null;
+                pendingDownloadName = null;
+                hidePasswordModal();
+            }
+            return;
+        }
+        if (!lightbox.classList.contains('active')) return;
+        switch(e.key) {
+            case 'Escape': closeLightbox(); break;
+            case 'ArrowLeft': showPrev(); break;
+            case 'ArrowRight': showNext(); break;
+            case 'f': case 'F': document.getElementById('lbFav').click(); break;
+            case 'd': case 'D': document.getElementById('lbDownload').click(); break;
+            case ' ': e.preventDefault(); toggleSlideshow(); break;
+        }
+    });
+
+    // ============================================================
+    // LIGHTBOX EVENT LISTENERS
+    // ============================================================
+    document.getElementById('lbClose').addEventListener('click', closeLightbox);
+    document.getElementById('lbPrev').addEventListener('click', showPrev);
+    document.getElementById('lbNext').addEventListener('click', showNext);
+    document.getElementById('lbSlideshow').addEventListener('click', toggleSlideshow);
+    document.getElementById('lbSpeed').addEventListener('change', () => {
+        if (isSlideshow) {
+            clearInterval(slideshowInterval);
+            slideshowInterval = setInterval(showNext, parseInt(document.getElementById('lbSpeed').value));
+        }
+    });
+
+    document.getElementById('lbFav').addEventListener('click', function() {
+        const src = this.dataset.src;
+        if (!src) return;
+        const isFav = favorites.includes(src);
+        if (isFav) {
+            favorites = favorites.filter(s => s !== src);
+            this.textContent = '🤍';
+            showToast('💔 Dihapus dari favorit');
+        } else {
+            favorites.push(src);
+            this.textContent = '❤️';
+            showToast('❤️ Ditambahkan ke favorit');
+        }
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        document.querySelectorAll('.fav-btn').forEach(b => {
+            if (b.dataset.src === src) {
+                b.textContent = favorites.includes(src) ? '❤️' : '🤍';
+                b.classList.toggle('active', favorites.includes(src));
+            }
+        });
+        // Jika tab favorit aktif, refresh galeri
+        if (currentTab === 'fav') {
+            renderGallery();
+        }
+    });
+
+    // Download di lightbox menggunakan password
+    document.getElementById('lbDownload').addEventListener('click', function() {
+        const src = lbImg.src;
+        const name = lbName.textContent;
+        if (src) downloadImageWithPassword(src, name);
+    });
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+
+    // ============================================================
+    // INISIALISASI
+    // ============================================================
+    function init() {
+        renderGallery();
+        // buildFilmstripAndDots dipanggil di dalam renderGallery
+        if (filteredPhotos.length > 0) {
+            new Image().src = filteredPhotos[0].src;
+        }
+        let scrollY = 0;
+        document.addEventListener('scroll', () => { if (!lightbox.classList.contains('active')) scrollY = window.scrollY; });
+        const origClose = closeLightbox;
+        closeLightbox = function() {
+            origClose();
+            window.scrollTo(0, scrollY);
+        };
+    }
+
+    // ============================================================
+    // CANVAS PARTIKEL
+    // ============================================================
+    (function initParticles() {
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let w, h;
+        let particles = [];
+        const NUM = 100;
+        let mouse = { x: null, y: null };
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * w;
+                this.y = Math.random() * h;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.5 + 0.15;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (mouse.x !== null) {
+                    const dx = this.x - mouse.x;
+                    const dy = this.y - mouse.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 150) {
+                        const force = (150 - dist) / 150;
+                        this.x += (dx / dist) * force * 2;
+                        this.y += (dy / dist) * force * 2;
+                    }
+                }
+                if (this.x < 0 || this.x > w) this.speedX *= -1;
+                if (this.y < 0 || this.y > h) this.speedY *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i=0; i<NUM; i++) particles.push(new Particle());
+
+        function drawLines() {
+            for (let i=0; i<particles.length; i++) {
+                for (let j=i+1; j<particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(255,255,255,${0.06 * (1 - dist/150)})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+            particles.forEach(p => { p.update(); p.draw(); });
+            drawLines();
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        document.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        document.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+        document.addEventListener('touchmove', (e) => {
+            const t = e.touches[0];
+            if (t) { mouse.x = t.clientX; mouse.y = t.clientY; }
+        }, { passive: true });
+        document.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+    })();
+
+    // ============================================================
+    // JALANKAN
+    // ============================================================
+    init();
+    showToast('🔒 Download dilindungi password', 2000);
+</script>
+</body>
+</html>
