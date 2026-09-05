@@ -25,41 +25,43 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --bg: #f4f7fc;
-            --bg-card: #ffffff;
-            --bg-profile: #ffffff;
-            --text: #0e1a2b;
-            --text-secondary: #2a3a54;
-            --text-muted: #6a7d99;
-            --border: #e0e6f0;
-            --shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
-            --shadow-hover: 0 16px 48px rgba(0, 20, 40, 0.10);
-            --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.20);
-            --radius: 20px;
-            --radius-sm: 12px;
-            --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --accent: #5b7cfa;
-            --accent-light: rgba(91, 124, 250, 0.12);
-            --accent-gradient: linear-gradient(135deg, #5b7cfa, #8b6cf7);
-            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --max-width: 1100px;
-            --favorite-color: #ff4757;
-        }
+:root {
+    --bg: #f0f7f0;
+    --bg-card: #ffffff;
+    --bg-profile: #ffffff;
+    --text: #0e1a0e;
+    --text-secondary: #1a3a1a;
+    --text-muted: #4a6a4a;
+    --border: #d0e0d0;
+    --shadow: 0 6px 24px rgba(0, 40, 0, 0.06);
+    --shadow-hover: 0 16px 48px rgba(0, 40, 0, 0.12);
+    --shadow-modal: 0 20px 60px rgba(0, 40, 0, 0.20);
+    --radius: 20px;
+    --radius-sm: 12px;
+    --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --accent: #2e7d32;
+    --accent-light: rgba(46, 125, 50, 0.12);
+    --accent-gradient: linear-gradient(135deg, #2e7d32, #43a047, #66bb6a);
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --max-width: 1100px;
+    --favorite-color: #ff4757;
+}
 
-        [data-theme="dark"] {
-            --bg: #0c1424;
-            --bg-card: #182234;
-            --bg-profile: #1a263a;
-            --text: #eef2f8;
-            --text-secondary: #c4cee4;
-            --text-muted: #8599bb;
-            --border: #2a3652;
-            --shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
-            --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.7);
-            --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.6);
-            --accent-light: rgba(91, 124, 250, 0.20);
-        }
+[data-theme="dark"] {
+    --bg: #0a1a0a;
+    --bg-card: #0f240f;
+    --bg-profile: #0f240f;
+    --text: #e8f5e9;
+    --text-secondary: #c8e6c9;
+    --text-muted: #81a881;
+    --border: #1a3a1a;
+    --shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+    --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.8);
+    --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.7);
+    --accent: #43a047;
+    --accent-light: rgba(67, 160, 71, 0.20);
+    --accent-gradient: linear-gradient(135deg, #2e7d32, #43a047, #66bb6a);
+}
 
         html {
             scroll-behavior: smooth;
@@ -82,10 +84,10 @@
         ::-webkit-scrollbar-track {
             background: var(--bg);
         }
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 10px;
-        }
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+}
 
         .container {
             max-width: var(--max-width);
@@ -232,16 +234,16 @@
             align-items: center;
             gap: 14px;
         }
-        .header-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transition: transform 0.3s ease;
-        }
+.header-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: transform 0.3s ease;
+}
         .header-title:hover {
             transform: scale(1.02);
         }
@@ -324,19 +326,19 @@
             display: flex;
             animation: slideDown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
         }
-        .profile-avatar-large {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--accent);
-            flex-shrink: 0;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .profile-avatar-large:hover {
-            transform: scale(1.05) rotate(-2deg);
-            border-color: #7c5cfc;
-        }
+.profile-avatar-large {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent);
+    flex-shrink: 0;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.profile-avatar-large:hover {
+    transform: scale(1.05) rotate(-2deg);
+    border-color: #43a047;
+}
         .profile-info {
             flex: 1;
             min-width: 200px;
@@ -371,12 +373,12 @@
             background: var(--bg);
             border: 1px solid transparent;
         }
-        .profile-social a:hover {
-            color: var(--accent);
-            border-color: var(--accent);
-            transform: translateY(-3px) scale(1.1);
-            background: var(--accent-light);
-        }
+.profile-social a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-3px) scale(1.1);
+    background: var(--accent-light);
+}
 
         /* ============================================================
            TABS
@@ -403,18 +405,22 @@
             position: relative;
             overflow: hidden;
         }
-        .tab-btn::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            width: 0;
-            height: 3px;
-            background: var(--accent);
-            border-radius: 3px 3px 0 0;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 3px 3px 0 0;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+.tab-btn.active {
+    color: var(--accent);
+    font-weight: 600;
+}
         .tab-btn:hover {
             color: var(--text-secondary);
             background: var(--accent-light);
@@ -761,117 +767,523 @@
             pointer-events: none;
         }
 
-        /* ============================================================
-           QUOTE LIST
-           ============================================================ */
-        .quote-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 40px;
-        }
-        .quote-item {
-            background: var(--bg-card);
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            padding: 18px 24px;
-            box-shadow: var(--shadow);
-            transition: all var(--transition);
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            transform: translateX(0);
-            cursor: default;
-            position: relative;
-        }
-        .quote-item:hover {
-            border-color: var(--accent);
-            box-shadow: var(--shadow-hover);
-            transform: translateX(6px) scale(1.01);
-            background: var(--bg-card);
-        }
-        .quote-item:active {
-            transform: scale(0.98);
-        }
-        .quote-number {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            min-width: 32px;
-            opacity: 0.6;
-            user-select: none;
-            transition: opacity 0.3s ease, color 0.3s ease;
-        }
-        .quote-item:hover .quote-number {
-            opacity: 1;
-            color: var(--accent);
-        }
-        .quote-content {
-            flex: 1;
-        }
-        .quote-text {
-            font-size: 1.0rem;
-            line-height: 1.6;
-            color: var(--text);
-            font-style: italic;
-            transition: color 0.3s ease;
-        }
-        .quote-item:hover .quote-text {
-            color: var(--accent);
-        }
-        .quote-text::before {
-            content: "“";
-            color: var(--accent);
-            font-weight: 700;
-        }
-        .quote-text::after {
-            content: "”";
-            color: var(--accent);
-            font-weight: 700;
-        }
-        .quote-source {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-            transition: color 0.3s ease;
-        }
-        .quote-item:hover .quote-source {
-            color: var(--text-secondary);
-        }
-        .quote-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            margin-top: 8px;
-            flex-wrap: wrap;
-        }
-        .quote-actions button {
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            padding: 4px 12px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.25s ease;
-            font-family: var(--font);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .quote-actions button:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: var(--accent-light);
-        }
-        .quote-actions button.fav-active {
-            color: #ff4757;
-            border-color: #ff4757;
-            background: rgba(255, 71, 87, 0.1);
-        }
-        .quote-actions button.fav-active:hover {
-            background: rgba(255, 71, 87, 0.2);
-        }
+/* ============================================================
+   QUOTE LIST - TEMA HIJAU ELEGAN
+   ============================================================ */
+.quote-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 40px;
+    padding: 4px 0;
+}
+
+.quote-item {
+    border-radius: var(--radius);
+    padding: 32px 36px 28px;
+    box-shadow: var(--shadow);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    background: linear-gradient(145deg, #f0f7f0 0%, #d4e8d4 100%);
+    color: #1a3a1a;
+}
+
+/* Variasi gradasi hijau yang lebih kuat */
+.quote-item:nth-child(1) {
+    background: linear-gradient(145deg, #e8f5e9 0%, #c8e6c9 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(2) {
+    background: linear-gradient(145deg, #e0f2e0 0%, #b8d9b8 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(3) {
+    background: linear-gradient(145deg, #d4edda 0%, #a8d5a8 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(4) {
+    background: linear-gradient(145deg, #e8f5e9 0%, #b9dfb9 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(5) {
+    background: linear-gradient(145deg, #e0f2e0 0%, #c5e0c5 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(6) {
+    background: linear-gradient(145deg, #d4edda 0%, #b2d8b2 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(7) {
+    background: linear-gradient(145deg, #e8f5e9 0%, #c2e0c2 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(8) {
+    background: linear-gradient(145deg, #e0f2e0 0%, #b5dcb5 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(9) {
+    background: linear-gradient(145deg, #d4edda 0%, #bce4bc 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(10) {
+    background: linear-gradient(145deg, #e8f5e9 0%, #cce4cc 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(11) {
+    background: linear-gradient(145deg, #e0f2e0 0%, #bee0be 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(12) {
+    background: linear-gradient(145deg, #d4edda 0%, #a8d5a8 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(13) {
+    background: linear-gradient(145deg, #e8f5e9 0%, #c8e6c8 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(14) {
+    background: linear-gradient(145deg, #e0f2e0 0%, #b8d9b8 100%);
+    color: #1a3a1a;
+}
+.quote-item:nth-child(15) {
+    background: linear-gradient(145deg, #d4edda 0%, #b2d8b2 100%);
+    color: #1a3a1a;
+}
+
+/* Glassmorphism overlay */
+.quote-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    pointer-events: none;
+    border-radius: var(--radius);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.quote-item:hover::after {
+    opacity: 1;
+}
+
+/* Decorative border gradient */
+.quote-item::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, #2e7d32, #43a047, #66bb6a, #2e7d32);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: -1;
+    background-size: 200% 200%;
+    animation: gradientMove 4s ease infinite;
+}
+
+@keyframes gradientMove {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.quote-item:hover::before {
+    opacity: 1;
+}
+
+/* Large quote mark background */
+.quote-item .quote-mark-bg {
+    position: absolute;
+    right: 20px;
+    bottom: -10px;
+    font-size: 12rem;
+    font-family: 'Playfair Display', serif;
+    color: rgba(46, 125, 50, 0.06);
+    pointer-events: none;
+    line-height: 1;
+    transition: all 0.6s ease;
+}
+
+.quote-item:hover .quote-mark-bg {
+    transform: scale(1.05) rotate(-3deg);
+    color: rgba(46, 125, 50, 0.10);
+}
+
+/* Decorative line top */
+.quote-item .quote-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #2e7d32, #66bb6a);
+    border-radius: 4px;
+    margin-bottom: 6px;
+    transition: all 0.4s ease;
+}
+
+.quote-item:hover .quote-line {
+    width: 100px;
+}
+
+/* Number badge */
+.quote-number-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(46, 125, 50, 0.10);
+    color: #2e7d32;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    align-self: flex-start;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(46, 125, 50, 0.06);
+}
+
+.quote-item:hover .quote-number-badge {
+    background: #2e7d32;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(46, 125, 50, 0.3);
+}
+
+/* Quote text - font lebih nyaman dibaca */
+.quote-text {
+    font-size: 1.2rem;
+    line-height: 1.9;
+    font-style: italic;
+    transition: all 0.3s ease;
+    font-family: 'Lora', 'Georgia', serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    padding: 4px 0;
+    color: inherit;
+}
+
+.quote-text::before {
+    content: "❝";
+    font-size: 1.5rem;
+    margin-right: 4px;
+    opacity: 0.5;
+    color: #2e7d32;
+}
+
+.quote-text::after {
+    content: "❞";
+    font-size: 1.5rem;
+    margin-left: 4px;
+    opacity: 0.5;
+    color: #2e7d32;
+}
+
+/* Attribution */
+.quote-attribution {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(46, 125, 50, 0.08);
+    transition: all 0.3s ease;
+}
+
+.quote-item:hover .quote-attribution {
+    border-top-color: rgba(46, 125, 50, 0.15);
+}
+
+.quote-attribution .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    font-family: 'Inter', sans-serif;
+    color: #ffffff;
+}
+
+.quote-source {
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.quote-source::before {
+    content: '— ';
+    opacity: 0.6;
+    color: #2e7d32;
+}
+
+.quote-item:hover .quote-source {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Actions */
+.quote-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+
+.quote-actions button {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(46, 125, 50, 0.08);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-size: 0.78rem;
+    color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: var(--font);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.quote-actions button:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: #2e7d32;
+    color: #2e7d32;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 16px rgba(46, 125, 50, 0.15);
+}
+
+.quote-actions button:active {
+    transform: scale(0.95);
+}
+
+.quote-actions button.fav-active {
+    color: #ff4757;
+    border-color: rgba(255, 71, 87, 0.2);
+    background: rgba(255, 71, 87, 0.08);
+}
+
+.quote-actions button.fav-active:hover {
+    background: rgba(255, 71, 87, 0.15);
+    border-color: rgba(255, 71, 87, 0.3);
+    box-shadow: 0 4px 16px rgba(255, 71, 87, 0.15);
+}
+
+.quote-actions button i {
+    font-size: 0.85rem;
+}
+
+/* ===== DARK MODE ===== */
+[data-theme="dark"] .quote-item {
+    background: linear-gradient(145deg, #0d1f0d 0%, #1a3a1a 100%);
+    color: #d4edda;
+}
+
+[data-theme="dark"] .quote-item:nth-child(1) {
+    background: linear-gradient(145deg, #0d1f0d 0%, #1a3a1a 100%);
+}
+[data-theme="dark"] .quote-item:nth-child(2) {
+    background: linear-gradient(145deg, #0f240f 0%, #1e421e 100%);
+}
+[data-theme="dark"] .quote-item:nth-child(3) {
+    background: linear-gradient(145deg, #122912 0%, #224a22 100%);
+}
+[data-theme="dark"] .quote-item:nth-child(4) {
+    background: linear-gradient(145deg, #0d1f0d 0%, #1c3d1c 100%);
+}
+[data-theme="dark"] .quote-item:nth-child(5) {
+    background: linear-gradient(145deg, #0f240f 0%, #1e421e 100%);
+}
+[data-theme="dark"] .quote-item:nth-child(6) {
+    background: linear-gradient(145deg, #122912 0%, #204620 100%);
+}
+[data-theme="dark"] .quote-item:nth-child(7) {
+    background: linear-gradient(145deg, #0d1f0d 0%, #1a3a1a 100%);
+}
+[data-theme="dark"] .quote-item:nth-child(8) {
+    background: linear-gradient(145deg, #0f240f 0%, #1e421e 100%);
+}
+[data-theme="dark"] .quote-item:nth-child(9) {
+    background: linear-gradient(145deg, #122912 0%, #224a22 100%);
+}
+[data-theme="dark"] .quote-item:nth-child(10) {
+    background: linear-gradient(145deg, #0d1f0d 0%, #1c3d1c 100%);
+}
+[data-theme="dark"] .quote-item:nth-child(11) {
+    background: linear-gradient(145deg, #0f240f 0%, #1e421e 100%);
+}
+[data-theme="dark"] .quote-item:nth-child(12) {
+    background: linear-gradient(145deg, #122912 0%, #204620 100%);
+}
+
+[data-theme="dark"] .quote-item::after {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .quote-item .quote-mark-bg {
+    color: rgba(46, 125, 50, 0.04);
+}
+
+[data-theme="dark"] .quote-item .quote-line {
+    background: linear-gradient(90deg, #43a047, #81c784);
+}
+
+[data-theme="dark"] .quote-number-badge {
+    background: rgba(46, 125, 50, 0.15);
+    color: #66bb6a;
+    border-color: rgba(46, 125, 50, 0.06);
+}
+
+[data-theme="dark"] .quote-item:hover .quote-number-badge {
+    background: #2e7d32;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .quote-attribution {
+    border-top-color: rgba(46, 125, 50, 0.06);
+}
+
+[data-theme="dark"] .quote-item:hover .quote-attribution {
+    border-top-color: rgba(46, 125, 50, 0.12);
+}
+
+[data-theme="dark"] .quote-attribution .avatar {
+    background: linear-gradient(135deg, #43a047, #81c784);
+}
+
+[data-theme="dark"] .quote-source {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+[data-theme="dark"] .quote-item:hover .quote-source {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="dark"] .quote-text::before,
+[data-theme="dark"] .quote-text::after {
+    color: #66bb6a;
+}
+
+[data-theme="dark"] .quote-actions button {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(46, 125, 50, 0.06);
+    color: rgba(255, 255, 255, 0.4);
+}
+
+[data-theme="dark"] .quote-actions button:hover {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: #43a047;
+    color: #81c784;
+}
+
+[data-theme="dark"] .quote-actions button.fav-active {
+    color: #ff4757;
+    border-color: rgba(255, 71, 87, 0.2);
+    background: rgba(255, 71, 87, 0.08);
+}
+
+[data-theme="dark"] .quote-actions button.fav-active:hover {
+    background: rgba(255, 71, 87, 0.15);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .quote-list {
+        gap: 20px;
+    }
+    .quote-item {
+        padding: 24px 24px 20px;
+        gap: 10px;
+    }
+    .quote-item .quote-mark-bg {
+        font-size: 7rem;
+        right: 12px;
+        bottom: -4px;
+    }
+    .quote-line {
+        width: 40px;
+        height: 2px;
+    }
+    .quote-item:hover .quote-line {
+        width: 70px;
+    }
+    .quote-text {
+        font-size: 1.05rem;
+        line-height: 1.8;
+    }
+    .quote-text::before,
+    .quote-text::after {
+        font-size: 1.3rem;
+    }
+    .quote-number-badge {
+        font-size: 0.6rem;
+        padding: 3px 12px;
+    }
+    .quote-source {
+        font-size: 0.8rem;
+    }
+    .quote-attribution {
+        padding-top: 10px;
+    }
+    .quote-actions {
+        margin-top: 4px;
+        gap: 8px;
+    }
+    .quote-actions button {
+        padding: 4px 14px;
+        font-size: 0.72rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .quote-item {
+        padding: 18px 16px 16px;
+        border-radius: var(--radius-sm);
+    }
+    .quote-item .quote-mark-bg {
+        font-size: 5rem;
+        right: 8px;
+    }
+    .quote-text {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        font-family: 'Lora', 'Georgia', serif;
+    }
+    .quote-text::before,
+    .quote-text::after {
+        font-size: 1.1rem;
+    }
+    .quote-number-badge {
+        font-size: 0.55rem;
+        padding: 2px 10px;
+    }
+    .quote-source {
+        font-size: 0.75rem;
+    }
+    .quote-actions button {
+        font-size: 0.68rem;
+        padding: 3px 10px;
+    }
+    .quote-attribution .avatar {
+        width: 26px;
+        height: 26px;
+        font-size: 0.65rem;
+    }
+}
 
         /* ============================================================
            PAGINATION
@@ -901,11 +1313,11 @@
             color: var(--accent);
             background: var(--accent-light);
         }
-        .pagination button.active-page {
-            background: var(--accent);
-            color: #fff;
-            border-color: var(--accent);
-        }
+.pagination button.active-page {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
         .pagination button:disabled {
             opacity: 0.4;
             cursor: not-allowed;
@@ -1026,15 +1438,15 @@
             background: rgba(255, 255, 255, 0.20);
             color: #ffffff;
         }
-        [data-theme="light"] .lightbox-top-bar .lb-btn {
-            background: rgba(0, 0, 0, 0.06);
-            border-color: rgba(0, 0, 0, 0.08);
-            color: rgba(0, 0, 0, 0.65);
-        }
-        [data-theme="light"] .lightbox-top-bar .lb-btn:hover {
-            background: rgba(0, 0, 0, 0.12);
-            color: #000000;
-        }
+[data-theme="light"] .lightbox-top-bar .lb-btn {
+    background: rgba(46, 125, 50, 0.06);
+    border-color: rgba(46, 125, 50, 0.08);
+    color: rgba(0, 40, 0, 0.65);
+}
+[data-theme="light"] .lightbox-top-bar .lb-btn:hover {
+    background: rgba(46, 125, 50, 0.12);
+    color: #1a3a1a;
+}
         .lightbox-top-bar .lightbox-close {
             background: transparent !important;
             border: none !important;
@@ -1553,26 +1965,26 @@
             justify-content: flex-end;
             gap: 12px;
         }
-        .btn-download {
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 12px 36px;
-            border-radius: 50px;
-            font-family: var(--font);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 20px rgba(91, 124, 250, 0.30);
-        }
-        .btn-download:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 8px 32px rgba(91, 124, 250, 0.40);
-        }
+.btn-download {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 12px 36px;
+    border-radius: 50px;
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(46, 125, 50, 0.30);
+}
+.btn-download:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(46, 125, 50, 0.40);
+}
         .btn-download:active {
             transform: scale(0.96);
         }
@@ -2408,16 +2820,196 @@
         padding: 8px 14px !important;
     }
 }
+
+/* ============================================================
+   CONFIRM MODAL - ELEGAN
+   ============================================================ */
+.confirm-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 6000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    padding: 24px;
+}
+
+.confirm-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.confirm-content {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    max-width: 420px;
+    width: 100%;
+    padding: 40px 36px 32px;
+    box-shadow: var(--shadow-modal);
+    transform: scale(0.92) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background var(--transition);
+    border: 1px solid var(--border);
+    text-align: center;
+}
+
+.confirm-modal.active .confirm-content {
+    transform: scale(1) translateY(0);
+}
+
+.confirm-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 2.2rem;
+    color: var(--accent);
+    transition: background var(--transition), color var(--transition);
+}
+.confirm-btn.confirm {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(46, 125, 50, 0.30);
+}
+.confirm-btn.confirm:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(46, 125, 50, 0.40);
+}
+
+.confirm-content h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.confirm-content p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.confirm-btn {
+    padding: 10px 32px;
+    border-radius: 50px;
+    font-family: var(--font);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: none;
+}
+
+.confirm-btn.cancel {
+    background: var(--bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.confirm-btn.cancel:hover {
+    background: var(--border);
+    color: var(--text);
+    transform: translateY(-2px);
+}
+
+.confirm-btn.confirm {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(91, 124, 250, 0.30);
+}
+
+.confirm-btn.confirm:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(91, 124, 250, 0.40);
+}
+
+.confirm-btn:active {
+    transform: scale(0.96);
+}
+
+/* Dark mode */
+[data-theme="dark"] .confirm-content {
+    background: #182234;
+    border-color: #2a3652;
+}
+
+[data-theme="dark"] .confirm-icon {
+    background: rgba(91, 124, 250, 0.2);
+}
+
+[data-theme="dark"] .confirm-btn.cancel {
+    background: #1a263a;
+    color: #c4cee4;
+    border-color: #2a3652;
+}
+
+[data-theme="dark"] .confirm-btn.cancel:hover {
+    background: #2a3652;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .confirm-content {
+        padding: 32px 24px 28px;
+    }
+    .confirm-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+    .confirm-content h3 {
+        font-size: 1.1rem;
+    }
+    .confirm-content p {
+        font-size: 0.85rem;
+    }
+    .confirm-btn {
+        padding: 8px 24px;
+        font-size: 0.85rem;
+        flex: 1;
+    }
+}
     </style>
 </head>
 <body>
+
+<!-- ===== CONFIRM MODAL ===== -->
+<div class="confirm-modal" id="confirmModal">
+    <div class="confirm-content">
+        <div class="confirm-icon">
+            <i class="fas fa-external-link-alt"></i>
+        </div>
+        <h3 id="confirmTitle">Keluar dari halaman?</h3>
+        <p id="confirmMessage">Anda akan meninggalkan galeri ini dan menuju ke link eksternal. Yakin ingin melanjutkan?</p>
+        <div class="confirm-actions">
+            <button class="confirm-btn cancel" id="confirmCancel">Batal</button>
+            <button class="confirm-btn confirm" id="confirmOk">Lanjutkan</button>
+        </div>
+    </div>
+</div>
 
     <div class="container">
 
         <!-- ===== HEADER ===== -->
         <header class="header">
             <div class="header-left">
-                <h1 class="header-title">✦ Kenangan</h1>
+                <h1 class="header-title">Blog Pribadi</h1>
             </div>
             <div class="header-actions">
                 <span class="stats-badge" id="stats">0 foto · 0 kata</span>
@@ -2430,19 +3022,19 @@
             </div>
         </header>
 
-        <!-- ===== PROFILE SECTION ===== -->
-        <section class="profile-section" id="profileSection">
-            <img class="profile-avatar-large" id="profileAvatar" src="https://i.postimg.cc/bwv8bP3S/IMG-20260903-213417.jpg" alt="Foto Profil" />
-            <div class="profile-info">
-                <div class="profile-name" id="profileName">Aden</div>
-                <div class="profile-bio" id="profileBio">Penikmat momen kecil dan kata-kata bermakna. Selamat datang di galeri pribadi saya.</div>
-                <div class="profile-social" id="profileSocial">
-                    <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" target="_blank" title="Website"><i class="fas fa-globe"></i></a>
-                </div>
-            </div>
-        </section>
+<!-- ===== PROFILE SECTION ===== -->
+<section class="profile-section" id="profileSection">
+    <img class="profile-avatar-large" id="profileAvatar" src="https://i.postimg.cc/bwv8bP3S/IMG-20260903-213417.jpg" alt="Foto Profil" />
+    <div class="profile-info">
+        <div class="profile-name" id="profileName">Aden A F</div>
+        <div class="profile-bio" id="profileBio">Menangkap sunyi lewat lensa, merajut cerita lewat aksara. Selamat datang di galeri rasa saya.</div>
+<div class="profile-social" id="profileSocial">
+    <a href="https://www.instagram.com/aden.as.f4" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/share/1DyRt2xpdK/" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+    <a href="#" target="_blank" title="Website"><i class="fas fa-globe"></i></a>
+</div>
+    </div>
+</section>
 
         <!-- ===== TABS ===== -->
         <div class="tabs" id="tabs">
@@ -2497,7 +3089,7 @@
 
         <!-- ===== FOOTER ===== -->
         <footer class="footer">
-            Setiap foto punya cerita &bull; <span id="footerCount">0</span> momen tersimpan
+            Dibuat secara mandiri by Aden A F&bull; <span id="footerCount">0</span> momen tersimpan
         </footer>
     </div>
 
@@ -2687,35 +3279,35 @@
         const quotesData = [{
             id: 1,
             quote: 'Hidup dalam kesendirian, Mengabaikan perasaan, dan dipaksa menikmati keadaan',
-            attribution: '— Sendiri dalam bingung'
+            attribution: 'Sendiri dalam bingung'
         }, {
             id: 2,
             quote: 'Apa yang lebih hebat dari memendam perasaan? Apakah dengan menyatakan Nya?',
-            attribution: '— Mencari titik terang'
+            attribution: 'Mencari titik terang'
         }, {
             id: 3,
             quote: 'Membuat kebohongan dan mencari pembenaran, apakah itu keahlian-mu?',
-            attribution: '— Mengungkapkan kekecewaan'
+            attribution: 'Mengungkapkan kekecewaan'
         }, {
             id: 4,
             quote: 'Mata menilai dari tampilan, telinga menilai dari ucapan, tapi tubuh menilai dengan bagaimana cara dia diperlakukan. Untuk itu, percayalah pada tubuhmu, karena telinga hanya bisa mendengar tanpa tahu bagaimana dia bertindak, dan mata hanya untuk sekedar melihat tanpa tahu bagaimana dia bersikap.',
-            attribution: '— Belajar memahami'
+            attribution: 'Belajar memahami'
         }, {
             id: 5,
             quote: 'melihat, merasakan, dan menyampaikan',
-            attribution: '— Rasa'
+            attribution: 'Rasa'
         }, {
             id: 6,
             quote: 'berfikir, merenung, dan menyadari',
-            attribution: '— Sadar diri'
+            attribution: 'Sadar diri'
         }, {
             id: 7,
             quote: 'otak memiliki beban yang lebih berat dalam memikirkan daripada tubuh yang melaksanakan',
-            attribution: '— Kekuatan pikiran'
+            attribution: 'Kekuatan pikiran'
         }, {
             id: 8,
             quote: 'Lepaskan apa yang membuatmu merasa berat! Dan jujur lah pada mereka yang membuatmu merasa kurang nyaman, terkadang pukulan bisa lebih efektif untuk menyadarkan orang lain daripada hanya sekedar ucapan atau justru hanya diam membisu!… Hidup bukan hanya untuk mencari kemenangan, tapi justru ketenangan lah yang paling penting. Jangan hanya karena mengejar prestasi sampai membuatmu frustasi!… Kamu hanya butuh lingkungan yang nyaman tanpa adanya tekanan.',
-            attribution: '— Melepas tekanan dan membebaskan pikiran'
+            attribution: 'Melepas tekanan dan membebaskan pikiran'
         }];
 
         // =============================================================
@@ -2752,16 +3344,16 @@
         // =============================================================
         //  👤  PROFIL
         // =============================================================
-        const profileData = {
-            name: 'Aden A F',
-            bio: 'Menangkap sunyi lewat lensa, merajut cerita lewat aksara. Selamat datang di galeri rasa saya.',
-            avatar: 'https://i.postimg.cc/bwv8bP3S/IMG-20260903-213417.jpg',
-            social: {
-                instagram: '#',
-                twitter: '#',
-                website: '#'
-            }
-        };
+const profileData = {
+    name: 'Aden A F',
+    bio: 'Menangkap sunyi lewat lensa, merajut cerita lewat aksara. Selamat datang di galeri rasa saya.',
+    avatar: 'https://i.postimg.cc/bwv8bP3S/IMG-20260903-213417.jpg',
+    social: {
+        instagram: 'https://www.instagram.com/aden.as.f4',
+        facebook: 'https://www.facebook.com/share/1DyRt2xpdK/',
+        website: '#'
+    }
+};
 
         // =============================================================
         //  🧠  STATE
@@ -3444,7 +4036,7 @@
             context.font = '12px Inter, sans-serif';
             context.textAlign = 'left';
             context.textBaseline = 'bottom';
-            context.fillText('✦ Galeri Pribadi', 40, height - 40);
+            context.fillText('Blog Pribadi', 40, height - 40);
         }
 
         // =============================================================
@@ -3549,7 +4141,7 @@
                 context.font = '14px Inter, sans-serif';
                 context.textAlign = 'left';
                 context.textBaseline = 'bottom';
-                context.fillText('✦ Galeri Pribadi', 50, height - 50);
+                context.fillText('Blog Pribadi', 50, height - 50);
 
                 const link = document.createElement('a');
                 link.download = `quote-${item.id}.png`;
@@ -4042,17 +4634,33 @@
         document.getElementById('profileAvatar').src = profileData.avatar;
         document.getElementById('profileName').textContent = profileData.name;
         document.getElementById('profileBio').textContent = profileData.bio;
-        const socialContainer = document.getElementById('profileSocial');
-        if (profileData.social) {
-            const links = [
-                { icon: 'fab fa-instagram', url: profileData.social.instagram || '#' },
-                { icon: 'fab fa-twitter', url: profileData.social.twitter || '#' },
-                { icon: 'fas fa-globe', url: profileData.social.website || '#' }
-            ];
-            socialContainer.innerHTML = links.map(l =>
-                `<a href="${l.url}" target="_blank" title="${l.icon}"><i class="${l.icon}"></i></a>`
-            ).join('');
-        }
+// ===== SETELAH PERBAIKAN (benar) =====
+const socialContainer = document.getElementById('profileSocial');
+if (profileData.social) {
+    const links = [
+        { icon: 'fab fa-instagram', url: profileData.social.instagram || '#' },
+        { icon: 'fab fa-facebook', url: profileData.social.facebook || '#' },
+    ];
+    socialContainer.innerHTML = links.map(l =>
+        `<a href="${l.url}" target="_blank" title="${l.icon}"><i class="${l.icon}"></i></a>`
+    ).join('');
+}
+
+// ===== KONFIRMASI KELUAR KE LINK EKSTERNAL =====
+document.getElementById('profileSocial').addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link && link.href && !link.href.includes('#')) {
+        e.preventDefault();
+        const url = link.href;
+        showConfirm(
+            'Keluar dari halaman?',
+            'Anda akan meninggalkan galeri ini dan menuju ke link eksternal. Yakin ingin melanjutkan?',
+            function() {
+                window.open(url, '_blank');
+            }
+        );
+    }
+});
 
         profileToggle.addEventListener('click', () => {
             profileVisible = !profileVisible;
@@ -4083,6 +4691,51 @@
         console.log('%c📸 Galeri Pribadi • Versi Final', 'font-size:20px; font-weight:700;');
         console.log('%c✅ Custom Dropdown Settings | Download Kutipan | Slideshow | Favorit', 'font-size:14px; color:#5b7cfa;');
         console.log('💡 Klik Download pada kutipan untuk kustomisasi.');
+        
+        // =============================================================
+//  🎯  CUSTOM CONFIRM MODAL
+// =============================================================
+const confirmModal = document.getElementById('confirmModal');
+const confirmTitle = document.getElementById('confirmTitle');
+const confirmMessage = document.getElementById('confirmMessage');
+const confirmOk = document.getElementById('confirmOk');
+const confirmCancel = document.getElementById('confirmCancel');
+
+let confirmCallback = null;
+
+function showConfirm(title, message, onConfirm) {
+    confirmTitle.textContent = title || 'Keluar dari halaman?';
+    confirmMessage.textContent = message || 'Anda akan meninggalkan galeri ini dan menuju ke link eksternal. Yakin ingin melanjutkan?';
+    confirmCallback = onConfirm || null;
+    confirmModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeConfirm() {
+    confirmModal.classList.remove('active');
+    document.body.style.overflow = '';
+    confirmCallback = null;
+}
+
+confirmCancel.addEventListener('click', closeConfirm);
+confirmOk.addEventListener('click', function() {
+    if (typeof confirmCallback === 'function') {
+        confirmCallback();
+    }
+    closeConfirm();
+});
+
+// Tutup dengan klik overlay
+confirmModal.addEventListener('click', function(e) {
+    if (e.target === confirmModal) closeConfirm();
+});
+
+// Tutup dengan tombol ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && confirmModal.classList.contains('active')) {
+        closeConfirm();
+    }
+});
     </script>
 
 </body>
