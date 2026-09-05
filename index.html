@@ -1918,21 +1918,6 @@
             right: 4px;
         }
 
-        /* ----- BG OPTIONS ----- */
-        .bg-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .bg-option {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            position: relative;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
         .bg-option:hover {
             transform: scale(1.08);
@@ -2985,6 +2970,227 @@
         flex: 1;
     }
 }
+.bg-options {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 6px 4px 12px 4px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+}
+
+.bg-options::-webkit-scrollbar {
+    height: 4px;
+}
+.bg-options::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 4px;
+}
+
+.bg-option-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 3px;
+    scroll-snap-align: start;
+}
+
+.bg-option {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    flex-shrink: 0;
+}
+
+.bg-option:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.bg-option.active {
+    border-color: var(--accent);
+    transform: scale(1.08);
+    box-shadow: 0 0 0 4px var(--accent-light);
+}
+
+.bg-option .check {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.bg-option.active .check {
+    opacity: 1;
+}
+.quote-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(46, 125, 50, 0.10);
+    color: #2e7d32;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    align-self: flex-start;
+    font-family: 'Inter', sans-serif;
+    border: 1px solid rgba(46, 125, 50, 0.06);
+    margin-bottom: 8px;
+}
+[data-theme="dark"] .quote-number {
+    background: rgba(46, 125, 50, 0.15);
+    color: #66bb6a;
+    border-color: rgba(46, 125, 50, 0.06);
+}
+/* Tampilkan tombol favorit selalu di perangkat sentuh */
+@media (hover: none) {
+    .photo-fav-btn {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+}
+/* ===== TOMBOL AKSI KUTIPAN – LEMBUT TAPI JELAS ===== */
+.quote-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+.quote-item:hover .quote-actions {
+    opacity: 1;
+}
+.quote-actions button {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 50px;
+    padding: 5px 16px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.55);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: var(--font);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    backdrop-filter: blur(2px);
+    letter-spacing: 0.3px;
+}
+.quote-actions button i {
+    font-size: 0.8rem;
+}
+.quote-actions button .btn-label {
+    font-size: 0.7rem;
+}
+.quote-actions button:hover {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(46, 125, 50, 0.3);
+    color: rgba(0, 0, 0, 0.8);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.quote-actions button:active {
+    transform: scale(0.96);
+}
+
+/* Tombol download – hijau lembut */
+.quote-actions .download-btn {
+    background: rgba(46, 125, 50, 0.08);
+    border-color: rgba(46, 125, 50, 0.2);
+    color: #2e7d32;
+}
+.quote-actions .download-btn:hover {
+    background: rgba(46, 125, 50, 0.15);
+    border-color: #2e7d32;
+    color: #1b5e20;
+}
+
+/* Tombol favorit aktif */
+.quote-actions button.fav-active {
+    color: #e74c6f;
+    border-color: rgba(231, 76, 111, 0.25);
+    background: rgba(231, 76, 111, 0.06);
+}
+.quote-actions button.fav-active:hover {
+    background: rgba(231, 76, 111, 0.12);
+    border-color: rgba(231, 76, 111, 0.4);
+    color: #c0392b;
+}
+
+/* ===== DARK MODE ===== */
+[data-theme="dark"] .quote-actions {
+    opacity: 0.75;
+}
+[data-theme="dark"] .quote-item:hover .quote-actions {
+    opacity: 1;
+}
+[data-theme="dark"] .quote-actions button {
+    background: rgba(0, 0, 0, 0.25);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.5);
+}
+[data-theme="dark"] .quote-actions button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(67, 160, 71, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+}
+[data-theme="dark"] .quote-actions .download-btn {
+    background: rgba(67, 160, 71, 0.1);
+    border-color: rgba(67, 160, 71, 0.2);
+    color: #66bb6a;
+}
+[data-theme="dark"] .quote-actions .download-btn:hover {
+    background: rgba(67, 160, 71, 0.2);
+    border-color: #43a047;
+    color: #81c784;
+}
+[data-theme="dark"] .quote-actions button.fav-active {
+    color: #ff6b81;
+    border-color: rgba(255, 107, 129, 0.2);
+    background: rgba(255, 107, 129, 0.06);
+}
+[data-theme="dark"] .quote-actions button.fav-active:hover {
+    background: rgba(255, 107, 129, 0.12);
+    border-color: rgba(255, 107, 129, 0.4);
+    color: #ff4757;
+}
+
+/* Responsif – tetap dalam satu baris */
+@media (max-width: 480px) {
+    .quote-actions {
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+    .quote-actions button {
+        padding: 4px 12px;
+        font-size: 0.7rem;
+    }
+    .quote-actions button i {
+        font-size: 0.7rem;
+    }
+    .quote-actions button .btn-label {
+        font-size: 0.65rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -3027,11 +3233,10 @@
     <img class="profile-avatar-large" id="profileAvatar" src="https://i.postimg.cc/bwv8bP3S/IMG-20260903-213417.jpg" alt="Foto Profil" />
     <div class="profile-info">
         <div class="profile-name" id="profileName">Aden A F</div>
-        <div class="profile-bio" id="profileBio">Menangkap sunyi lewat lensa, merajut cerita lewat aksara. Selamat datang di galeri rasa saya.</div>
+        <div class="profile-bio" id="profileBio">mengabadikan alam yang sunyi, dan mengungkapkan isi hati yang berisik.</div>
 <div class="profile-social" id="profileSocial">
     <a href="https://www.instagram.com/aden.as.f4" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
     <a href="https://www.facebook.com/share/1DyRt2xpdK/" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
-    <a href="#" target="_blank" title="Website"><i class="fas fa-globe"></i></a>
 </div>
     </div>
 </section>
@@ -3100,7 +3305,6 @@
                 <img class="lightbox-image" id="lightboxImage" src="" alt="Foto" draggable="false" oncontextmenu="return false;" />
                 <div class="lightbox-protect-overlay" oncontextmenu="return false;" id="protectOverlay"></div>
                 <div class="lightbox-top-bar">
-                    <button class="lb-btn" id="shareBtn"><i class="fas fa-share-alt"></i> Bagikan</button>
                     <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
                 </div>
             </div>
@@ -3276,7 +3480,7 @@
             { id: 12, image: 'https://i.postimg.cc/NfrDGChh/IMG-20260309-135415.jpg', title: 'Bunga' },
             { id: 13, image: 'https://i.postimg.cc/6322VSfW/IMG-20260331-140659.jpg', title: 'Awan pagi' },
             { id: 14, image: 'https://i.postimg.cc/hjRw46sW/photo3494464497912718631-ORIGINAL.jpg', title: 'Cahaya Pagi' },
-            { id: 14, image: 'https://i.postimg.cc/ZRzgY2HB/Screenshot-20260719-070748.jpg', title: 'Cahaya pagi' }
+            { id: 15, image: 'https://i.postimg.cc/ZRzgY2HB/Screenshot-20260719-070748.jpg', title: 'Cahaya pagi' }
         ];
 
         const quotesData = [{
@@ -3305,27 +3509,122 @@
             attribution: 'Sadar diri'
         }, {
             id: 7,
-            quote: 'otak memiliki beban yang lebih berat dalam memikirkan daripada tubuh yang melaksanakan',
+            quote: 'otak memiliki beban yang lebih berat dalam memikirkan daripada tubuh dalam melaksanakan',
             attribution: 'Kekuatan pikiran'
         }, {
             id: 8,
             quote: 'Lepaskan apa yang membuatmu merasa berat! Dan jujur lah pada mereka yang membuatmu merasa kurang nyaman, terkadang pukulan bisa lebih efektif untuk menyadarkan orang lain daripada hanya sekedar ucapan atau justru hanya diam membisu!… Hidup bukan hanya untuk mencari kemenangan, tapi justru ketenangan lah yang paling penting. Jangan hanya karena mengejar prestasi sampai membuatmu frustasi!… Kamu hanya butuh lingkungan yang nyaman tanpa adanya tekanan.',
-            attribution: 'Melepas tekanan dan membebaskan pikiran'
+            attribution: 'Melepas rasa tidak nyaman'
         }];
 
         // =============================================================
         //  🎨  QUOTE DOWNLOAD CONFIG
         // =============================================================
-        const bgOptionsData = [
-            { id: 'bg1', name: 'Sunset', colors: ['#f093fb', '#f5576c'], type: 'gradient' },
-            { id: 'bg2', name: 'Ocean', colors: ['#4facfe', '#00f2fe'], type: 'gradient' },
-            { id: 'bg3', name: 'Forest', colors: ['#43e97b', '#38f9d7'], type: 'gradient' },
-            { id: 'bg4', name: 'Rose', colors: ['#d4145a', '#3a1c71'], type: 'gradient' },
-            { id: 'bg5', name: 'Gold', colors: ['#fa709a', '#fee140'], type: 'gradient' },
-            { id: 'bg6', name: 'Pastel', colors: ['#a8edea', '#fed6e3'], type: 'gradient' },
-            { id: 'bg7', name: 'Navy', colors: ['#1a1a2e', '#16213e'], type: 'gradient' },
-            { id: 'bg8', name: 'Cream', colors: ['#f5f0e1', '#e8dccc'], type: 'gradient' },
-        ];
+const bgOptionsData = [
+    // ===== 100 GRADIEN TERBAIK UNTUK KUTIPAN =====
+    { id: 'bg1', name: 'Sunset Dream', colors: ['#f093fb', '#f5576c'], type: 'gradient' },
+    { id: 'bg2', name: 'Ocean Blue', colors: ['#4facfe', '#00f2fe'], type: 'gradient' },
+    { id: 'bg3', name: 'Fresh Mint', colors: ['#43e97b', '#38f9d7'], type: 'gradient' },
+    { id: 'bg4', name: 'Royal Rose', colors: ['#d4145a', '#3a1c71'], type: 'gradient' },
+    { id: 'bg5', name: 'Golden Flame', colors: ['#fa709a', '#fee140'], type: 'gradient' },
+    { id: 'bg6', name: 'Soft Pastel', colors: ['#a8edea', '#fed6e3'], type: 'gradient' },
+    { id: 'bg7', name: 'Midnight Navy', colors: ['#1a1a2e', '#16213e'], type: 'gradient' },
+    { id: 'bg8', name: 'Warm Cream', colors: ['#f5f0e1', '#e8dccc'], type: 'gradient' },
+    { id: 'bg9', name: 'Aurora', colors: ['#11998e', '#38ef7d'], type: 'gradient' },
+    { id: 'bg10', name: 'Candy Pink', colors: ['#ff6b6b', '#ee5a24'], type: 'gradient' },
+    { id: 'bg11', name: 'Lavender', colors: ['#a18cd1', '#fbc2eb'], type: 'gradient' },
+    { id: 'bg12', name: 'Sunrise', colors: ['#ffecd2', '#fcb69f'], type: 'gradient' },
+    { id: 'bg13', name: 'Neon Blue', colors: ['#00b4db', '#0083b0'], type: 'gradient' },
+    { id: 'bg14', name: 'Velvet', colors: ['#7f00ff', '#e100ff'], type: 'gradient' },
+    { id: 'bg15', name: 'Forest Mist', colors: ['#2c3e50', '#3498db'], type: 'gradient' },
+    { id: 'bg16', name: 'Peach Tea', colors: ['#f7971e', '#ffd200'], type: 'gradient' },
+    { id: 'bg17', name: 'Purple Haze', colors: ['#8e2de2', '#4a00e0'], type: 'gradient' },
+    { id: 'bg18', name: 'Coral Reef', colors: ['#ff9a9e', '#fecfef'], type: 'gradient' },
+    { id: 'bg19', name: 'Night Sky', colors: ['#141e30', '#243b55'], type: 'gradient' },
+    { id: 'bg20', name: 'Berry Blush', colors: ['#ee9ca7', '#ffdde1'], type: 'gradient' },
+    { id: 'bg21', name: 'Emerald', colors: ['#134e5e', '#71b280'], type: 'gradient' },
+
+    // ===== GRADIEN BARU (79 TAMBAHAN) =====
+    { id: 'bg22', name: 'Mango', colors: ['#ffe259', '#ffa751'], type: 'gradient' },
+    { id: 'bg23', name: 'Oceanic', colors: ['#2b5876', '#4e4376'], type: 'gradient' },
+    { id: 'bg24', name: 'Fire', colors: ['#f12711', '#f5af19'], type: 'gradient' },
+    { id: 'bg25', name: 'Blush', colors: ['#dd5e89', '#f7bb97'], type: 'gradient' },
+    { id: 'bg26', name: 'Moonlit', colors: ['#0f2027', '#203a43', '#2c5364'], type: 'gradient' },
+    { id: 'bg27', name: 'Sunflower', colors: ['#f6d365', '#fda085'], type: 'gradient' },
+    { id: 'bg28', name: 'Cherry', colors: ['#eb3349', '#f45c43'], type: 'gradient' },
+    { id: 'bg29', name: 'Frost', colors: ['#e6dada', '#274046'], type: 'gradient' },
+    { id: 'bg30', name: 'Pink Lemonade', colors: ['#fdcbf1', '#e6dee9'], type: 'gradient' },
+    { id: 'bg31', name: 'Palm', colors: ['#fc4a1a', '#f7b733'], type: 'gradient' },
+    { id: 'bg32', name: 'Minty', colors: ['#00b09b', '#96c93d'], type: 'gradient' },
+    { id: 'bg33', name: 'Dusk', colors: ['#2c3e50', '#fd746c'], type: 'gradient' },
+    { id: 'bg34', name: 'Lilac', colors: ['#b224ef', '#7579ff'], type: 'gradient' },
+    { id: 'bg35', name: 'Sunkist', colors: ['#f2994a', '#f2c94c'], type: 'gradient' },
+    { id: 'bg36', name: 'Aqua', colors: ['#00c6ff', '#0072ff'], type: 'gradient' },
+    { id: 'bg37', name: 'Candy', colors: ['#ff4b1f', '#ff9068'], type: 'gradient' },
+    { id: 'bg38', name: 'Silver', colors: ['#bdc3c7', '#2c3e50'], type: 'gradient' },
+    { id: 'bg39', name: 'Rose Gold', colors: ['#e0ac9b', '#f7c5b8'], type: 'gradient' },
+    { id: 'bg40', name: 'Forest Glade', colors: ['#11998e', '#38ef7d'], type: 'gradient' },
+    { id: 'bg41', name: 'Royal', colors: ['#141e30', '#e2c275'], type: 'gradient' },
+    { id: 'bg42', name: 'Burgundy', colors: ['#870000', '#190a05'], type: 'gradient' },
+    { id: 'bg43', name: 'Orchid', colors: ['#b92b27', '#1565c0'], type: 'gradient' },
+    { id: 'bg44', name: 'Grass', colors: ['#56ab2f', '#a8e063'], type: 'gradient' },
+    { id: 'bg45', name: 'Lavender Rose', colors: ['#f5b8ea', '#8b5cf6'], type: 'gradient' },
+    { id: 'bg46', name: 'Citrus', colors: ['#f7971e', '#ffd200'], type: 'gradient' },
+    { id: 'bg47', name: 'Sapphire', colors: ['#0f0c29', '#302b63', '#24243e'], type: 'gradient' },
+    { id: 'bg48', name: 'Peachy', colors: ['#ed8a5a', '#e6845c'], type: 'gradient' },
+    { id: 'bg49', name: 'Icy', colors: ['#2980b9', '#6dd5fa', '#ffffff'], type: 'gradient' },
+    { id: 'bg50', name: 'Crimson', colors: ['#642b73', '#c6426e'], type: 'gradient' },
+    { id: 'bg51', name: 'Lime', colors: ['#56ab2f', '#a8e063'], type: 'gradient' },
+    { id: 'bg52', name: 'Honey', colors: ['#f7971e', '#ffd200'], type: 'gradient' },
+    { id: 'bg53', name: 'Storm', colors: ['#3a7bd5', '#3a6073'], type: 'gradient' },
+    { id: 'bg54', name: 'Sea Green', colors: ['#2ecc71', '#1abc9c'], type: 'gradient' },
+    { id: 'bg55', name: 'Raspberry', colors: ['#e44d26', '#f16529'], type: 'gradient' },
+    { id: 'bg56', name: 'Violet', colors: ['#8a2387', '#e94057', '#f27121'], type: 'gradient' },
+    { id: 'bg57', name: 'Arctic', colors: ['#89f7fe', '#66a6ff'], type: 'gradient' },
+    { id: 'bg58', name: 'Tangerine', colors: ['#f85032', '#e73827'], type: 'gradient' },
+    { id: 'bg59', name: 'Moss', colors: ['#134e5e', '#71b280'], type: 'gradient' },
+    { id: 'bg60', name: 'Berry', colors: ['#e44d26', '#f16529'], type: 'gradient' },
+    { id: 'bg61', name: 'Cobalt', colors: ['#00c6fb', '#005bea'], type: 'gradient' },
+    { id: 'bg62', name: 'Creamy', colors: ['#f5f7fa', '#c3cfe2'], type: 'gradient' },
+    { id: 'bg63', name: 'Night', colors: ['#000000', '#434343'], type: 'gradient' },
+    { id: 'bg64', name: 'Wine', colors: ['#870000', '#190a05'], type: 'gradient' },
+    { id: 'bg65', name: 'Salmon', colors: ['#f85032', '#e73827'], type: 'gradient' },
+    { id: 'bg66', name: 'Denim', colors: ['#2b5876', '#4e4376'], type: 'gradient' },
+    { id: 'bg67', name: 'Sorbet', colors: ['#f5b8ea', '#b3e5fc'], type: 'gradient' },
+    { id: 'bg68', name: 'Plum', colors: ['#8a2387', '#e94057'], type: 'gradient' },
+    { id: 'bg69', name: 'Mint Julep', colors: ['#00b09b', '#96c93d'], type: 'gradient' },
+    { id: 'bg70', name: 'Cocoa', colors: ['#4e4376', '#2b5876'], type: 'gradient' },
+    { id: 'bg71', name: 'Fuchsia', colors: ['#f12711', '#f5af19'], type: 'gradient' },
+    { id: 'bg72', name: 'Iris', colors: ['#b224ef', '#7579ff'], type: 'gradient' },
+    { id: 'bg73', name: 'Lemon', colors: ['#ffecd2', '#fcb69f'], type: 'gradient' },
+    { id: 'bg74', name: 'Jade', colors: ['#11998e', '#38ef7d'], type: 'gradient' },
+    { id: 'bg75', name: 'Cinnamon', colors: ['#f7971e', '#ffd200'], type: 'gradient' },
+    { id: 'bg76', name: 'Sky', colors: ['#4facfe', '#00f2fe'], type: 'gradient' },
+    { id: 'bg77', name: 'Lush', colors: ['#56ab2f', '#a8e063'], type: 'gradient' },
+    { id: 'bg78', name: 'Mystic', colors: ['#141e30', '#243b55'], type: 'gradient' },
+    { id: 'bg79', name: 'Twilight', colors: ['#3a7bd5', '#3a6073'], type: 'gradient' },
+    { id: 'bg80', name: 'Amber', colors: ['#f12711', '#f5af19'], type: 'gradient' },
+    { id: 'bg81', name: 'Coral', colors: ['#ff6b6b', '#ee5a24'], type: 'gradient' },
+    { id: 'bg82', name: 'Teal', colors: ['#00b4db', '#0083b0'], type: 'gradient' },
+    { id: 'bg83', name: 'Vanilla', colors: ['#f5f0e1', '#e8dccc'], type: 'gradient' },
+    { id: 'bg84', name: 'Blossom', colors: ['#ff9a9e', '#fecfef'], type: 'gradient' },
+    { id: 'bg85', name: 'Dawn', colors: ['#fdcbf1', '#e6dee9'], type: 'gradient' },
+    { id: 'bg86', name: 'Ocean', colors: ['#2b5876', '#4e4376'], type: 'gradient' },
+    { id: 'bg87', name: 'Sunny', colors: ['#f6d365', '#fda085'], type: 'gradient' },
+    { id: 'bg88', name: 'Sakura', colors: ['#f5b8ea', '#ffdde1'], type: 'gradient' },
+    { id: 'bg89', name: 'Nebula', colors: ['#7f00ff', '#e100ff'], type: 'gradient' },
+    { id: 'bg90', name: 'Mango', colors: ['#f7971e', '#ffd200'], type: 'gradient' },
+    { id: 'bg91', name: 'Lagoon', colors: ['#00c6ff', '#0072ff'], type: 'gradient' },
+    { id: 'bg92', name: 'Rose', colors: ['#e44d26', '#f16529'], type: 'gradient' },
+    { id: 'bg93', name: 'Sugar', colors: ['#f5f7fa', '#c3cfe2'], type: 'gradient' },
+    { id: 'bg94', name: 'Glacier', colors: ['#89f7fe', '#66a6ff'], type: 'gradient' },
+    { id: 'bg95', name: 'Poppy', colors: ['#f85032', '#e73827'], type: 'gradient' },
+    { id: 'bg96', name: 'Sage', colors: ['#134e5e', '#71b280'], type: 'gradient' },
+    { id: 'bg97', name: 'Mauve', colors: ['#8a2387', '#e94057'], type: 'gradient' },
+    { id: 'bg98', name: 'Clementine', colors: ['#ff4b1f', '#ff9068'], type: 'gradient' },
+    { id: 'bg99', name: 'Silver Cloud', colors: ['#bdc3c7', '#2c3e50'], type: 'gradient' },
+    { id: 'bg100', name: 'Midnight Rose', colors: ['#0f0c29', '#302b63', '#24243e'], type: 'gradient' }
+];
 
         const fontOptionsWithLabel = [
             { value: 'Playfair Display', label: 'Playfair', sample: 'Aa' },
@@ -3349,7 +3648,7 @@
         // =============================================================
 const profileData = {
     name: 'Aden A F',
-    bio: 'Menangkap sunyi lewat lensa, merajut cerita lewat aksara. Selamat datang di galeri rasa saya.',
+    bio: 'Mengabadikan Kondisi Alam yang Sunyi, dan Membagikan Kondisi Hati yang Berisik.',
     avatar: 'https://i.postimg.cc/bwv8bP3S/IMG-20260903-213417.jpg',
     social: {
         instagram: 'https://www.instagram.com/aden.as.f4',
@@ -3455,10 +3754,13 @@ const profileData = {
         // =============================================================
         //  ⚙️  SETTINGS
         // =============================================================
-        function openSettings() {
-            settingsOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+function openSettings() {
+    // Tutup quote modal jika terbuka
+    if (quoteModal.classList.contains('active')) closeQuoteModal();
+
+    settingsOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
 
         function closeSettings() {
             settingsOverlay.classList.remove('active');
@@ -3501,21 +3803,6 @@ const profileData = {
         });
         protectOverlay.addEventListener('contextmenu', (e) => e.preventDefault());
 
-        shareBtn.addEventListener('click', () => {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Lihat foto ini',
-                    text: 'Momen dari galeri pribadi',
-                    url: currentLightboxImage
-                }).catch(() => {});
-            } else {
-                navigator.clipboard.writeText(currentLightboxImage).then(() => {
-                    showToast('Link foto disalin!');
-                }).catch(() => {
-                    showToast('Bagikan foto ini: ' + currentLightboxImage);
-                });
-            }
-        });
 
         // =============================================================
         //  🍞  TOAST
@@ -3831,54 +4118,57 @@ const profileData = {
             return filtered;
         }
 
-        function renderQuotes() {
-            const data = getFilteredQuotes();
-            if (data.length === 0) {
-                quoteList.innerHTML = '';
-                if (currentTab === 'quotes') {
-                    emptyState.style.display = 'block';
-                    emptyState.querySelector('h3').textContent = showFavOnly ? 'Belum ada favorit' : 'Belum ada kata-kata yang cocok';
-                    emptyState.querySelector('.icon').innerHTML = '<i class="fas fa-quote-right"></i>';
-                }
-                return;
-            }
-            if (currentTab === 'quotes') emptyState.style.display = 'none';
-
-            quoteList.innerHTML = data.map((item, index) => {
-                const isFav = isQuoteFav(item.id);
-                return `
-                    <div class="quote-item animate-quote" style="animation-delay: ${index * 0.04}s">
-                        <span class="quote-number">#${index + 1}</span>
-                        <div class="quote-content">
-                            <div class="quote-text">${item.quote}</div>
-                            <div class="quote-source">${item.attribution}</div>
-                            <div class="quote-actions">
-                                <button class="${isFav ? 'fav-active' : ''}" onclick="toggleQuoteFavorite(${item.id});">
-                                    <i class="fas fa-heart"></i> ${isFav ? 'Favorit' : 'Tambahkan'}
-                                </button>
-                                <button onclick="openQuoteDownloadModal(${item.id});">
-                                    <i class="fas fa-image"></i> Download
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+function renderQuotes() {
+    const data = getFilteredQuotes();
+    if (data.length === 0) {
+        quoteList.innerHTML = '';
+        if (currentTab === 'quotes') {
+            emptyState.style.display = 'block';
+            emptyState.querySelector('h3').textContent = showFavOnly ? 'Belum ada favorit' : 'Belum ada kata-kata yang cocok';
+            emptyState.querySelector('.icon').innerHTML = '<i class="fas fa-quote-right"></i>';
         }
+        return;
+    }
+    if (currentTab === 'quotes') emptyState.style.display = 'none';
+
+    quoteList.innerHTML = data.map((item, index) => {
+        const isFav = isQuoteFav(item.id);
+        return `
+            <div class="quote-item animate-quote" style="animation-delay: ${index * 0.04}s">
+                <span class="quote-number">#${index + 1}</span>
+                <div class="quote-content">
+                    <div class="quote-text">${item.quote}</div>
+                    <div class="quote-source">${item.attribution}</div>
+                    <div class="quote-actions">
+                        <button class="${isFav ? 'fav-active' : ''}" onclick="toggleQuoteFavorite(${item.id});">
+                            <i class="fas fa-heart"></i> <span class="btn-label">${isFav ? 'Favorit' : 'Simpan'}</span>
+                        </button>
+                        <button class="download-btn" onclick="openQuoteDownloadModal(${item.id});">
+                            <i class="fas fa-download"></i> <span class="btn-label">Unduh</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
 
         // =============================================================
         //  🖼️  QUOTE DOWNLOAD MODAL
         // =============================================================
-        function openQuoteDownloadModal(quoteId) {
-            currentQuoteId = quoteId;
-            selectedBgIndex = 0;
-            selectedFont = 'Playfair Display';
-            updateBgOptionsUI();
-            updateFontPickerUI();
-            updatePreview();
-            quoteModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+function openQuoteDownloadModal(quoteId) {
+    // Tutup settings jika terbuka
+    if (settingsOverlay.classList.contains('active')) closeSettings();
+
+    currentQuoteId = quoteId;
+    selectedBgIndex = 0;
+    selectedFont = 'Playfair Display';
+    updateBgOptionsUI();
+    updateFontPickerUI();
+    updatePreview();
+    quoteModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
 
         function closeQuoteModal() {
             quoteModal.classList.remove('active');
@@ -3886,31 +4176,35 @@ const profileData = {
             currentQuoteId = null;
         }
 
-        function updateBgOptionsUI() {
-            bgOptionsContainer.innerHTML = bgOptionsData.map((bg, index) => {
-                const isActive = index === selectedBgIndex;
-                const colors = bg.colors;
-                let bgStyle = '';
-                if (bg.type === 'gradient') {
-                    bgStyle = `background: linear-gradient(135deg, ${colors[0]}, ${colors[1]});`;
-                } else {
-                    bgStyle = `background: ${colors[0]};`;
-                }
-                return `
-                    <div class="bg-option ${isActive ? 'active' : ''}" style="${bgStyle}" data-index="${index}" title="${bg.name}">
-                        <span class="check"><i class="fas fa-check"></i></span>
-                    </div>
-                `;
-            }).join('');
-
-            bgOptionsContainer.querySelectorAll('.bg-option').forEach(el => {
-                el.addEventListener('click', () => {
-                    selectedBgIndex = parseInt(el.dataset.index);
-                    updateBgOptionsUI();
-                    updatePreview();
-                });
-            });
+function updateBgOptionsUI() {
+    bgOptionsContainer.innerHTML = bgOptionsData.map((bg, index) => {
+        const isActive = index === selectedBgIndex;
+        const colors = bg.colors;
+        let bgStyle = '';
+        if (bg.type === 'gradient') {
+            bgStyle = `background: linear-gradient(135deg, ${colors[0]}, ${colors[1]});`;
+        } else {
+            bgStyle = `background: ${colors[0]};`;
         }
+        return `
+            <div class="bg-option-wrapper" style="display:flex;flex-direction:column;align-items:center;flex:0 0 auto;gap:3px;cursor:pointer;" data-index="${index}">
+                <div class="bg-option ${isActive ? 'active' : ''}" style="${bgStyle}" title="${bg.name}">
+                    <span class="check"><i class="fas fa-check"></i></span>
+                </div>
+                <span style="font-size:0.55rem;color:var(--text-muted);font-weight:500;line-height:1;user-select:none;">${index + 1}</span>
+            </div>
+        `;
+    }).join('');
+
+    // Event listener dipasang pada wrapper, bukan pada bg-option
+    bgOptionsContainer.querySelectorAll('.bg-option-wrapper').forEach(wrapper => {
+        wrapper.addEventListener('click', () => {
+            selectedBgIndex = parseInt(wrapper.dataset.index);
+            updateBgOptionsUI();
+            updatePreview();
+        });
+    });
+}
 
         // =============================================================
         //  🎨  FONT PICKER
@@ -4039,7 +4333,7 @@ const profileData = {
             context.font = '12px Inter, sans-serif';
             context.textAlign = 'left';
             context.textBaseline = 'bottom';
-            context.fillText('Blog Pribadi', 40, height - 40);
+            context.fillText('askolani', 40, height - 40);
         }
 
         // =============================================================
@@ -4249,42 +4543,50 @@ const profileData = {
         // =============================================================
         //  🎞️  SLIDESHOW
         // =============================================================
-        function startSlideshow() {
-            let photos = getFilteredPhotos();
-            if (photos.length < 2) {
-                showToast('Minimal 2 foto untuk slideshow', 'fa-exclamation-circle');
-                return;
-            }
-            if (showFavOnly) {
-                const favPhotos = photos.filter(p => isPhotoFav(p.id));
-                if (favPhotos.length >= 2) photos = favPhotos;
-                else {
-                    showToast('Minimal 2 foto favorit untuk slideshow', 'fa-exclamation-circle');
-                    return;
-                }
-            }
-            slideshowPhotos = photos;
-            slideshowIndex = 0;
-            slideshowActive = true;
-            slideshowBtn.innerHTML = '<i class="fas fa-pause"></i> Berhenti';
-            slideshowBtn.classList.add('active');
+function startSlideshow() {
+    // Tutup lightbox jika terbuka
+    if (isLightboxOpen) closeLightbox();
 
-            slideshowOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            showSlideshowPhoto(slideshowIndex);
-            startSlideshowTimer();
+    let photos = getFilteredPhotos();
+    if (photos.length < 2) {
+        showToast('Minimal 2 foto untuk slideshow', 'fa-exclamation-circle');
+        return;
+    }
+    if (showFavOnly) {
+        const favPhotos = photos.filter(p => isPhotoFav(p.id));
+        if (favPhotos.length >= 2) photos = favPhotos;
+        else {
+            showToast('Minimal 2 foto favorit untuk slideshow', 'fa-exclamation-circle');
+            return;
         }
+    }
+    slideshowPhotos = photos;
+    slideshowIndex = 0;
+    slideshowActive = true;
+    slideshowBtn.innerHTML = '<i class="fas fa-pause"></i> Berhenti';
+    slideshowBtn.classList.add('active');
 
-        function closeSlideshow() {
-            slideshowActive = false;
-            clearInterval(slideshowTimer);
-            slideshowTimer = null;
-            slideshowOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-            slideshowBtn.innerHTML = '<i class="fas fa-play"></i> Slideshow';
-            slideshowBtn.classList.remove('active');
-            slideshowProgress.style.width = '0%';
-        }
+    slideshowOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    showSlideshowPhoto(slideshowIndex);
+    startSlideshowTimer();
+}
+
+function closeSlideshow() {
+    slideshowActive = false;
+    clearInterval(slideshowTimer);
+    slideshowTimer = null;
+    // Bersihkan progress interval
+    if (slideshowImage._progressInterval) {
+        clearInterval(slideshowImage._progressInterval);
+        slideshowImage._progressInterval = null;
+    }
+    slideshowOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    slideshowBtn.innerHTML = '<i class="fas fa-play"></i> Slideshow';
+    slideshowBtn.classList.remove('active');
+    slideshowProgress.style.width = '0%';
+}
 
         function startSlideshowTimer() {
             clearInterval(slideshowTimer);
@@ -4303,52 +4605,60 @@ const profileData = {
             }
         }
 
-        function showSlideshowPhoto(index) {
-            const photo = slideshowPhotos[index];
-            if (!photo) return;
+function showSlideshowPhoto(index) {
+    const photo = slideshowPhotos[index];
+    if (!photo) return;
 
-            const img = slideshowImage;
-            img.className = '';
-            void img.offsetWidth;
+    const img = slideshowImage;
 
-            let transitionClass = 'transition-zoom-in';
-            switch (transitionEffect) {
-                case 'zoom-out':
-                    transitionClass = 'transition-zoom-out';
-                    break;
-                case 'slide-left':
-                    transitionClass = 'transition-slide-left';
-                    break;
-                case 'slide-right':
-                    transitionClass = 'transition-slide-right';
-                    break;
-                case 'slide-up':
-                    transitionClass = 'transition-slide-up';
-                    break;
-                default:
-                    transitionClass = 'transition-zoom-in';
-            }
+    // Bersihkan interval progress sebelumnya
+    if (img._progressInterval) {
+        clearInterval(img._progressInterval);
+        img._progressInterval = null;
+    }
 
-            img.src = photo.image;
-            img.alt = photo.title || 'Foto';
-            img.className = transitionClass;
+    img.className = '';
+    void img.offsetWidth;
 
-            slideshowTitle.textContent = photo.title || 'Tanpa judul';
-            slideshowCounter.textContent = `${index + 1} / ${slideshowPhotos.length}`;
-            slideshowProgress.style.width = '0%';
+    let transitionClass = 'transition-zoom-in';
+    switch (transitionEffect) {
+        case 'zoom-out':
+            transitionClass = 'transition-zoom-out';
+            break;
+        case 'slide-left':
+            transitionClass = 'transition-slide-left';
+            break;
+        case 'slide-right':
+            transitionClass = 'transition-slide-right';
+            break;
+        case 'slide-up':
+            transitionClass = 'transition-slide-up';
+            break;
+        default:
+            transitionClass = 'transition-zoom-in';
+    }
 
-            let startTime = Date.now();
-            const duration = slideshowInterval;
-            const progressInterval = setInterval(() => {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min((elapsed / duration) * 100, 100);
-                slideshowProgress.style.width = progress + '%';
-                if (progress >= 100) {
-                    clearInterval(progressInterval);
-                }
-            }, 50);
-            img._progressInterval = progressInterval;
+    img.src = photo.image;
+    img.alt = photo.title || 'Foto';
+    img.className = transitionClass;
+
+    slideshowTitle.textContent = photo.title || 'Tanpa judul';
+    slideshowCounter.textContent = `${index + 1} / ${slideshowPhotos.length}`;
+    slideshowProgress.style.width = '0%';
+
+    let startTime = Date.now();
+    const duration = slideshowInterval;
+    // Simpan interval ke properti img agar bisa dibersihkan
+    img._progressInterval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min((elapsed / duration) * 100, 100);
+        slideshowProgress.style.width = progress + '%';
+        if (progress >= 100) {
+            clearInterval(img._progressInterval);
+            img._progressInterval = null;
         }
+    }, 50);
+}
 
         function slideshowNextPhoto() {
             if (!slideshowActive) return;
@@ -4367,6 +4677,9 @@ const profileData = {
         }
 
         slideshowClose.addEventListener('click', closeSlideshow);
+        slideshowOverlay.addEventListener('click', (e) => {
+    if (e.target === slideshowOverlay) closeSlideshow();
+});
         slideshowPrev.addEventListener('click', slideshowPrevPhoto);
         slideshowNext.addEventListener('click', slideshowNextPhoto);
 
@@ -4403,55 +4716,62 @@ const profileData = {
         // =============================================================
         //  🔍  SEARCH
         // =============================================================
-        searchInput.addEventListener('input', () => {
-            searchQuery = searchInput.value;
-            currentPage = 1;
-            if (slideshowActive) closeSlideshow();
-            renderAll();
-        });
+let searchTimeout = null;
+searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        searchQuery = searchInput.value;
+        currentPage = 1;
+        if (slideshowActive) closeSlideshow();
+        renderAll();
+    }, 300);
+});
 
         // =============================================================
         //  📑  TABS & CONTROLS
         // =============================================================
-        function switchTab(tabName) {
-            if (slideshowActive) closeSlideshow();
-            currentTab = tabName;
-            currentPage = 1;
+function switchTab(tabName) {
+    if (slideshowActive) closeSlideshow();
+    currentTab = tabName;
+    currentPage = 1;
+    // Reset pencarian
+    searchQuery = '';
+    searchInput.value = '';
 
-            document.querySelectorAll('.tab-btn').forEach(b => {
-                b.classList.toggle('active', b.dataset.tab === tabName);
-            });
+    document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === tabName);
+    });
 
-            tabPhotos.classList.toggle('active', tabName === 'photos');
-            tabQuotes.classList.toggle('active', tabName === 'quotes');
-            tabFavorites.classList.toggle('active', tabName === 'favorites');
+    tabPhotos.classList.toggle('active', tabName === 'photos');
+    tabQuotes.classList.toggle('active', tabName === 'quotes');
+    tabFavorites.classList.toggle('active', tabName === 'favorites');
 
-            const isPhoto = tabName === 'photos';
-            const isQuote = tabName === 'quotes';
-            const isFav = tabName === 'favorites';
+    const isPhoto = tabName === 'photos';
+    const isQuote = tabName === 'quotes';
+    const isFav = tabName === 'favorites';
 
-            if (isQuote) {
-                searchWrapper.classList.add('visible');
-                searchInput.placeholder = 'Cari kata-kata...';
-                emptyState.style.display = 'none';
-            } else if (isPhoto) {
-                searchWrapper.classList.add('visible');
-                searchInput.placeholder = 'Cari judul foto...';
-                emptyState.style.display = 'none';
-            } else {
-                searchWrapper.classList.remove('visible');
-                emptyState.style.display = 'none';
-            }
+    if (isQuote) {
+        searchWrapper.classList.add('visible');
+        searchInput.placeholder = 'Cari kata-kata...';
+        emptyState.style.display = 'none';
+    } else if (isPhoto) {
+        searchWrapper.classList.add('visible');
+        searchInput.placeholder = 'Cari judul foto...';
+        emptyState.style.display = 'none';
+    } else {
+        searchWrapper.classList.remove('visible');
+        emptyState.style.display = 'none';
+    }
 
-            slideshowBtn.style.display = isPhoto ? 'flex' : 'none';
-            randomBtn.style.display = isPhoto ? 'flex' : 'none';
-            gridViewBtn.style.display = isPhoto ? 'flex' : 'none';
-            listViewBtn.style.display = isPhoto ? 'flex' : 'none';
-            showFavOnlyBtn.style.display = isPhoto ? 'flex' : 'none';
+    slideshowBtn.style.display = isPhoto ? 'flex' : 'none';
+    randomBtn.style.display = isPhoto ? 'flex' : 'none';
+    gridViewBtn.style.display = isPhoto ? 'flex' : 'none';
+    listViewBtn.style.display = isPhoto ? 'flex' : 'none';
+    showFavOnlyBtn.style.display = isPhoto ? 'flex' : 'none';
 
-            if (isFav) renderFavorites();
-            else renderAll();
-        }
+    if (isFav) renderFavorites();
+    else renderAll();
+}
 
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
