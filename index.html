@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Josefin+Sans:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;600&family=Sacramento&family=Tangerine:wght@400;700&family=Caveat:wght@400;600&family=Italiana&family=Lexend+Deca:wght@400;600&display=swap" rel="stylesheet" />
 
     <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     <style>
         /* ============================================================
@@ -3430,6 +3430,317 @@ body.fullscreen-mode .header {
         min-width: 30px;
     }
 }
+/* ============================================================
+   WHATSAPP BUTTON
+   ============================================================ */
+.profile-social-btn {
+    color: var(--text-muted);
+    font-size: 1.3rem;
+    transition: all var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: var(--font);
+}
+
+.profile-social-btn:hover {
+    color: #25D366;
+    border-color: #25D366;
+    transform: translateY(-3px) scale(1.1);
+    background: rgba(37, 211, 102, 0.08);
+}
+
+[data-theme="dark"] .profile-social-btn:hover {
+    background: rgba(37, 211, 102, 0.15);
+}
+
+/* ===== WHATSAPP PASSWORD MODAL ===== */
+.whatsapp-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.60);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    z-index: 7000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    padding: 24px;
+}
+
+.whatsapp-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.whatsapp-content {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    max-width: 400px;
+    width: 100%;
+    padding: 36px 32px 32px;
+    box-shadow: var(--shadow-modal);
+    transform: scale(0.92) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background var(--transition);
+    border: 1px solid var(--border);
+    text-align: center;
+}
+
+.whatsapp-modal.active .whatsapp-content {
+    transform: scale(1) translateY(0);
+}
+
+.whatsapp-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(37, 211, 102, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 2.5rem;
+    color: #25D366;
+    transition: background var(--transition);
+}
+
+.whatsapp-content h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.whatsapp-content p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.whatsapp-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.whatsapp-input-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+    text-align: center;
+    letter-spacing: 4px;
+}
+
+.whatsapp-input-group input:focus {
+    border-color: #25D366;
+    box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.12);
+}
+
+.whatsapp-input-group .error-msg {
+    color: #ff4757;
+    font-size: 0.8rem;
+    min-height: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.whatsapp-input-group .error-msg.show {
+    opacity: 1;
+}
+
+.whatsapp-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.whatsapp-actions button {
+    flex: 1;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-family: var(--font);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: none;
+}
+
+.whatsapp-actions .btn-cancel-wa {
+    background: var(--bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.whatsapp-actions .btn-cancel-wa:hover {
+    background: var(--border);
+    color: var(--text);
+}
+
+.whatsapp-actions .btn-unlock {
+    background: #25D366;
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.30);
+}
+
+.whatsapp-actions .btn-unlock:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(37, 211, 102, 0.40);
+}
+
+.whatsapp-actions .btn-unlock:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Show number setelah unlock */
+.whatsapp-number-display {
+    display: none;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    border: 2px solid #25D366;
+    margin-top: 12px;
+    font-family: var(--font);
+    letter-spacing: 1px;
+}
+
+.whatsapp-number-display.show {
+    display: block;
+    animation: fadeInUp 0.4s ease both;
+}
+
+.whatsapp-number-display .wa-label {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.whatsapp-number-display .wa-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.whatsapp-number-display .wa-number i {
+    color: #25D366;
+    font-size: 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .whatsapp-content {
+        padding: 28px 20px 24px;
+    }
+    .whatsapp-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    .whatsapp-content h3 {
+        font-size: 1rem;
+    }
+    .whatsapp-input-group input {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+    }
+    .whatsapp-actions button {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+}
+/* ===== FIREWORKS & ETIKA CHAT ===== */
+.wa-fireworks{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:20;
+  border-radius:var(--radius);
+}
+.firework-dot{
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  animation: fireworkPop 900ms cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+}
+@keyframes fireworkPop{
+  0%{ transform:translate(0,0) scale(0); opacity:1; }
+  20%{ opacity:1; }
+  100%{ transform:translate(var(--x), var(--y)) scale(1.2); opacity:0; }
+}
+.wa-etiquette{
+  background: linear-gradient(135deg, rgba(37,211,102,0.10), rgba(46,125,50,0.08));
+  border:1px dashed #25D366;
+  border-radius:12px;
+  padding:12px 14px;
+  margin-top:14px;
+  font-size:0.85rem;
+  color:var(--text-secondary);
+  line-height:1.5;
+  display:flex;
+  gap:10px;
+  text-align:left;
+  animation: fadeInUp 0.5s ease 0.3s both;
+}
+.wa-etiquette i{ color:#25D366; font-size:1.1rem; margin-top:2px; }
+
+.success-icon-custom{
+  position:relative;
+  width:72px; height:72px;
+  margin:0 auto 16px;
+  display:flex; align-items:center; justify-content:center;
+}
+.success-icon-bg{
+  width:72px; height:72px; border-radius:50%;
+  background: linear-gradient(135deg,#25D366,#128C7E);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; 
+  box-shadow:0 8px 24px rgba(37,211,102,0.35);
+  position:relative; z-index:2;
+}
+.success-icon-bg.whatsapp-success{
+  font-size:2.8rem;
+}
+.success-ring{
+  position:absolute; inset:-6px; border-radius:50%;
+  border:2px solid rgba(37,211,102,0.2);
+  animation: pulseRing 2s ease infinite;
+}
+.success-ring2{
+  position:absolute; inset:-12px; border-radius:50%;
+  border:1px solid rgba(37,211,102,0.12);
+  animation: pulseRing 2s ease infinite 0.5s;
+}
+@keyframes pulseRing{
+  0%{ transform:scale(0.9); opacity:1; }
+  100%{ transform:scale(1.2); opacity:0; }
+}
     </style>
 </head>
 <body>
@@ -3479,6 +3790,8 @@ body.fullscreen-mode .header {
 <div class="profile-social" id="profileSocial">
     <a href="https://www.instagram.com/aden.as.f4" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
     <a href="https://www.facebook.com/share/1DyRt2xpdK/" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+    <button class="profile-social-btn" id="whatsappBtn" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+    <a href="#" target="_blank" title="Website"><i class="fas fa-globe"></i></a>
 </div>
     </div>
 </section>
@@ -3899,12 +4212,11 @@ const bgOptionsData = [
         // =============================================================
 const profileData = {
     name: 'Aden A F',
-    bio: 'Mengabadikan Kondisi Alam yang Sunyi, dan Membagikan Kondisi Hati yang Berisik.',
+    bio: 'mengabadikan alam yang sunyi, dan mengungkapkan isi hati yang berisik.',
     avatar: 'https://i.postimg.cc/bwv8bP3S/IMG-20260903-213417.jpg',
     social: {
         instagram: 'https://www.instagram.com/aden.as.f4',
         facebook: 'https://www.facebook.com/share/1DyRt2xpdK/',
-        website: '#'
     }
 };
 
@@ -5483,22 +5795,199 @@ document.addEventListener('webkitfullscreenchange', () => {
     }
 });
 
+// =============================================================
+//  📱  WHATSAPP WITH FIREWORKS + SOPAN
+// =============================================================
+const WA_PASSWORD = 'saungtipar';
+const WA_NUMBER = '085773641591';
+const WA_MESSAGE = 'Halo, saya melihat profil Anda di galeri pribadi.';
+
+const waModal = document.createElement('div');
+waModal.className = 'whatsapp-modal';
+waModal.id = 'whatsappModal';
+waModal.innerHTML = `
+    <div class="whatsapp-content" style="position:relative; overflow:hidden;">
+        <div class="wa-fireworks" id="waFireworks"></div>
+
+        <div id="waLockState">
+            <div class="whatsapp-icon"><i class="fab fa-whatsapp"></i></div>
+            <h3>🔒 WhatsApp Terkunci</h3>
+            <p>Masukkan sandi untuk melihat kontak.</p>
+            <div class="whatsapp-input-group">
+                <input type="password" id="waPasswordInput" placeholder="Masukkan sandi..." autocomplete="off" />
+                <div class="error-msg" id="waErrorMsg">❌ Sandi salah, coba lagi!</div>
+                <div class="whatsapp-actions">
+                    <button class="btn-cancel-wa" id="waCancelBtn">Batal</button>
+                    <button class="btn-unlock" id="waUnlockBtn">Buka <i class="fas fa-unlock"></i></button>
+                </div>
+            </div>
+        </div>
+
+<div id="waChatState" style="display:none;">
+    <div class="success-icon-custom">
+        <div class="success-icon-bg whatsapp-success">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="success-ring"></div>
+        <div class="success-ring2"></div>
+    </div>
+    <h3>Sandi Benar!</h3>
+    <p>Akses WhatsApp telah terbuka.</p>
+            
+            <div class="whatsapp-number-display show" style="display:block;">
+                <span class="wa-label">📱 Nomor WhatsApp</span>
+                <div class="wa-number">
+                    <i class="fab fa-whatsapp"></i>
+                    <span id="waNumberText"></span>
+                </div>
+            </div>
+
+            <div class="wa-etiquette">
+                <i class="fas fa-hand-holding-heart"></i>
+                <div><b>Mohon chat secara sopan kepada pengguna ini.</b><br>Perkenalkan diri, sampaikan maksud dengan jelas, dan hargai waktunya. Terima kasih 🙏</div>
+            </div>
+
+            <div class="whatsapp-actions" style="margin-top:18px; flex-direction:column;">
+                <button class="btn-unlock" id="waChatNowBtn" style="width:100%; justify-content:center;">
+                    <i class="fab fa-whatsapp"></i> Chat Sekarang
+                </button>
+                <div style="display:flex; gap:10px; width:100%;">
+                    <button class="btn-cancel-wa" id="waCopyBtn2" style="flex:1;"><i class="fas fa-copy"></i> Salin</button>
+                    <button class="btn-cancel-wa" id="waCloseBtn2" style="flex:1;">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+`;
+document.body.appendChild(waModal);
+
+const waModalEl = document.getElementById('whatsappModal');
+const waLockState = document.getElementById('waLockState');
+const waChatState = document.getElementById('waChatState');
+const waPasswordInput = document.getElementById('waPasswordInput');
+const waUnlockBtn = document.getElementById('waUnlockBtn');
+const waCancelBtn = document.getElementById('waCancelBtn');
+const waErrorMsg = document.getElementById('waErrorMsg');
+const waNumberText = document.getElementById('waNumberText');
+const waFireworks = document.getElementById('waFireworks');
+
+function launchFireworks(){
+    waFireworks.innerHTML = '';
+    const colors = ['#25D366','#43a047','#66bb6a','#ffd740','#ff6b6b','#4facfe'];
+    const centerX = waFireworks.offsetWidth / 2;
+    const centerY = waFireworks.offsetHeight / 2 - 40;
+    
+    // 3 letusan
+    for(let burst = 0; burst < 3; burst++){
+        setTimeout(()=>{
+            const bx = centerX + (Math.random()-0.5)*100;
+            const by = centerY + (Math.random()-0.5)*80;
+            for(let i=0; i<22; i++){
+                const dot = document.createElement('div');
+                dot.className = 'firework-dot';
+                const angle = (i / 22) * Math.PI * 2 + Math.random()*0.5;
+                const dist = 40 + Math.random()*90;
+                const x = Math.cos(angle)*dist;
+                const y = Math.sin(angle)*dist;
+                dot.style.left = bx+'px';
+                dot.style.top = by+'px';
+                dot.style.background = colors[Math.floor(Math.random()*colors.length)];
+                dot.style.setProperty('--x', x+'px');
+                dot.style.setProperty('--y', y+'px');
+                dot.style.animationDelay = Math.random()*0.15+'s';
+                waFireworks.appendChild(dot);
+                setTimeout(()=>dot.remove(), 1000);
+            }
+        }, burst*250);
+    }
+}
+
+function openWhatsAppModal() {
+    waModalEl.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    waLockState.style.display = 'block';
+    waChatState.style.display = 'none';
+    waFireworks.innerHTML = '';
+    waPasswordInput.disabled = false;
+    waPasswordInput.value = '';
+    waErrorMsg.classList.remove('show');
+    waUnlockBtn.disabled = false;
+    setTimeout(()=>waPasswordInput.focus(), 150);
+}
+function closeWhatsAppModal() {
+    waModalEl.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function unlockWhatsApp() {
+    if(waPasswordInput.value.trim() === WA_PASSWORD){
+        waNumberText.textContent = WA_NUMBER;
+        waLockState.style.display = 'none';
+        waChatState.style.display = 'block';
+        launchFireworks();
+        showToast('Sandi benar! 🎉', 'fa-check-circle');
+    } else {
+        waErrorMsg.classList.add('show');
+        waPasswordInput.value = '';
+        waPasswordInput.style.animation = 'shake 0.4s ease';
+        setTimeout(()=>waPasswordInput.style.animation='',400);
+    }
+}
+
+document.getElementById('whatsappBtn').addEventListener('click', openWhatsAppModal);
+waCancelBtn.addEventListener('click', closeWhatsAppModal);
+document.getElementById('waCloseBtn2').addEventListener('click', closeWhatsAppModal);
+waUnlockBtn.addEventListener('click', unlockWhatsApp);
+document.getElementById('waChatNowBtn').addEventListener('click', ()=>{
+    window.open(`https://wa.me/${WA_NUMBER.replace(/^0/,'62')}?text=${encodeURIComponent(WA_MESSAGE)}`,'_blank');
+});
+document.getElementById('waCopyBtn2').addEventListener('click', ()=>{
+    navigator.clipboard.writeText(WA_NUMBER);
+    showToast('Nomor disalin! 📋','fa-copy');
+});
+waPasswordInput.addEventListener('keydown', e=>{
+    if(e.key==='Enter') unlockWhatsApp();
+    if(e.key==='Escape') closeWhatsAppModal();
+});
+waModalEl.addEventListener('click', e=>{
+    if(e.target===waModalEl) closeWhatsAppModal();
+});
+
+// Tambahkan CSS untuk shake animation
+const styleSheet = document.createElement('style');
+styleSheet.textContent = `
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-10px); }
+        40% { transform: translateX(10px); }
+        60% { transform: translateX(-6px); }
+        80% { transform: translateX(6px); }
+    }
+`;
+document.head.appendChild(styleSheet);
+
+console.log('📱 WhatsApp dilindungi sandi. Sandi default: "saungtipar" (ubah di variabel WA_PASSWORD)');
+
         // =============================================================
         //  🚀  INIT
         // =============================================================
         document.getElementById('profileAvatar').src = profileData.avatar;
         document.getElementById('profileName').textContent = profileData.name;
         document.getElementById('profileBio').textContent = profileData.bio;
-// ===== SETELAH PERBAIKAN (benar) =====
+// ===== FIX SOSIAL + WHATSAPP TETAP MUNCUL =====
 const socialContainer = document.getElementById('profileSocial');
 if (profileData.social) {
-    const links = [
-        { icon: 'fab fa-instagram', url: profileData.social.instagram || '#' },
-        { icon: 'fab fa-facebook', url: profileData.social.facebook || '#' },
-    ];
-    socialContainer.innerHTML = links.map(l =>
-        `<a href="${l.url}" target="_blank" title="${l.icon}"><i class="${l.icon}"></i></a>`
-    ).join('');
+    socialContainer.innerHTML = `
+        <a href="${profileData.social.instagram}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="${profileData.social.facebook}" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <button class="profile-social-btn" id="whatsappBtn" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+    `;
+}
+
+// Penting: re-attach tombol WA setelah innerHTML di-replace
+const whatsappBtnNew = document.getElementById('whatsappBtn');
+if (whatsappBtnNew) {
+    whatsappBtnNew.addEventListener('click', openWhatsAppModal);
 }
 
 // ===== KONFIRMASI KELUAR KE LINK EKSTERNAL =====
